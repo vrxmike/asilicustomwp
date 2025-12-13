@@ -1,0 +1,35 @@
+/* ========================================= */
+/* ASILI GEMS - COLOR PALETTE                */
+/* ========================================= */
+
+:root {
+    /* 1. Primary Accent (Dark Green) */
+    /* Used for primary buttons, active states, icons, and key branding accents. */
+    --c-primary: #006644;
+    --c-primary-hover: #008559;
+
+    /* 2. Secondary Accent (Gold) */
+    /* Used for navigation underlines, star ratings, borders, and luxury highlights. */
+    --c-secondary: #D4AF37;
+    --c-secondary-text: #B5952F; /* Darker shade for text readability */
+
+    /* 3. Site Backgrounds */
+    --c-bg-page: #F4F6F5; /* Main page background (Off-white/Light Gray) */
+    --c-bg-card: #FFFFFF; /* Product cards and modal backgrounds (White) */
+    --c-bg-dark: #0A140F; /* Footer and Mobile Drawer background (Very Dark Green/Black) */
+
+    /* 4. Typography Colors */
+    --c-text-main: #0A140F; /* Main body text (Matches dark bg) */
+    --c-text-sub: #5A6660;  /* Subtitles, descriptions (Grayish Green) */
+    --c-text-on-dark: #F8F8F8; /* Text on dark backgrounds (Off-white) */
+
+    /* 5. Utility & Extra Colors */
+    --c-extra-1: #008559; /* Secondary Green */
+    --c-extra-2: #F2E2B3; /* Light Gold/Beige */
+    --c-white: #ffffff;   /* Pure White */
+    --c-brand-red: #8a1c1c; /* Deep Red (Used for Ruby/special accents) */
+
+    /* 6. Shadows */
+    --shadow-soft: 0 10px 40px -10px rgba(10, 20, 15, 0.08);
+    --shadow-hover: 0 20px 50px -10px rgba(10, 20, 15, 0.15);
+}
