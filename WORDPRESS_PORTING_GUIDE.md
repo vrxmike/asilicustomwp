@@ -1,66 +1,151 @@
-# WordPress & WooCommerce Porting Guide
+# WordPress Integration: Neve Pro + Otter + Sparks (No-PHP / No-Child Theme Method)
 
-**Objective:** Convert the custom static HTML/CSS/JS "Asili Gems" site into a fully functional WordPress Theme with WooCommerce support.
+**Objective:** Implement the "Asili Gems" custom design into your existing WordPress setup using **only** the Neve Pro Custom Layouts interface. No file uploads (FTP), no child themes, no PHP code editing.
 
-**Timing:** This process begins **after** you have completed the 5-Day Static Prototype.
+**Core Tools:**
+- **Neve Pro:** For "Custom Layouts" (Header, Footer, Content Injection).
+- **Otter Pro:** For advanced blocks (if needed) or simply for the "Custom HTML" block capability.
+- **WooCommerce:** The backend engine.
 
 ---
 
-## Phase 1: Theme Foundation
-Instead of just "uploading files," you must wrap your code in a structure WordPress understands.
+## Phase 1: Global Styles (CSS)
+Since we cannot upload a `.css` file via the WP Admin interface easily without a child theme, we will paste the styles into the Customizer.
 
-1.  **Create Theme Folder:**
-    - On your computer, create a folder: `wp-content/themes/asili-gems-theme`.
-2.  **Required Files:**
-    - `style.css`: Contains the standard WordPress comment block (Theme Name, Author, etc.).
-    - `functions.php`: The "brain" of the theme. This is where we will "enqueue" (load) your custom CSS and JS.
-    - `index.php`: Fallback template (can be blank or simple text for now).
-    - `screenshot.png`: A picture of your design (880x660px) to show in the WP Dashboard.
+1.  **Open:** Appearance > Customize > Additional CSS.
+2.  **Action:** Copy the *entire contents* of your local `assets/css/palette.css` AND `assets/css/style.css` and paste them here.
+    - *Tip:* Paste `palette.css` (variables) first, then `style.css` below it.
+3.  **Save/Publish.**
 
-## Phase 2: Asset Migration
-1.  **Move Assets:**
-    - Copy your `assets/` folder (created in the 5-Day plan) into the theme folder.
-    - *Path:* `themes/asili-gems-theme/assets/css/...`
-2.  **Enqueue in `functions.php`:**
-    - You cannot simply link CSS in the `<head>`. You must use PHP:
-    ```php
-    function asili_scripts() {
-        wp_enqueue_style('main-style', get_template_directory_uri() . '/assets/css/style.css');
-        wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true);
-    }
-    add_action('wp_enqueue_scripts', 'asili_scripts');
+---
+
+## Phase 2: Global Logic (JavaScript)
+We need your JavaScript (`app.js`) to run on every page to handle the Mobile Drawer, Modal, and Scroll effects.
+
+1.  **Navigate:** Neve > Custom Layouts > Add New.
+2.  **Name:** `Global JS Injection`.
+3.  **Editor:** Use the **Custom HTML** block.
+4.  **Content:**
+    Paste the logic directly inside script tags. (We will merge `products.js` and `app.js` for simplicity here).
+    ```html
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. Header Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (header) {
+                if (window.scrollY > 20) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
+            }
+        });
+
+        // --- 2. Mobile Drawer Logic ---
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('mobileDrawer');
+            if (drawer) {
+                drawer.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : 'auto';
+            }
+        };
+
+        // --- 3. Close Drawer on Click Outside ---
+        const drawer = document.getElementById('mobileDrawer');
+        if (drawer) {
+            drawer.addEventListener('click', (e) => {
+                if (e.target === drawer) toggleDrawer(); // Close if clicking the backdrop
+            });
+        }
+    });
+    </script>
     ```
+5.  **Neve Settings (Sidebar):**
+    - **Hooks:** `wp_footer` (This puts it at the very bottom of the page).
+    - **Conditions:** Entire Website.
+6.  **Publish.**
 
-## Phase 3: The "Cut & Paste" (Templates)
-WordPress assembles pages like Lego. You will slice your static `index.html` into three parts:
+---
 
-1.  **`header.php`:**
-    - Copy everything from `<!DOCTYPE html>` down to the closing `</header>`.
-    - Replace the `<head>` contents with `<?php wp_head(); ?>` (Critical for plugins/WooCommerce).
-2.  **`footer.php`:**
-    - Copy everything from `<footer>` down to `</html>`.
-    - Add `<?php wp_footer(); ?>` right before `</body>`.
-3.  **`front-page.php` (The Homepage):**
-    - Copy the "Middle" of your `index.html` (Hero, USP, etc.).
-    - Add `<?php get_header(); ?>` at the very top.
-    - Add `<?php get_footer(); ?>` at the very bottom.
+## Phase 3: The Custom Header
+Replace the default Neve header with your HTML.
 
-## Phase 4: WooCommerce Integration
-This is where we replace your static HTML "Shop" and "Product" pages with dynamic WooCommerce templates.
+1.  **Navigate:** Neve > Custom Layouts > Add New.
+2.  **Name:** `Custom Asili Header`.
+3.  **Editor:** Use the **Custom HTML** block.
+4.  **Content:** Paste your `<header>...</header>` HTML code (from `index.html`).
+    - *Crucial Update:* Change the `<a>` links. Instead of `href="index.html"`, use `href="/"`.
+5.  **Neve Settings:**
+    - **Hooks:** `header` (Action: **Replace**).
+    - **Conditions:** Entire Website.
+6.  **Publish.**
 
-1.  **Declare Support:** In `functions.php`, add `add_theme_support('woocommerce');`.
-2.  **The Shop Page (`archive-product.php`):**
-    - Copy the standard WooCommerce template to your theme folder: `themes/asili-gems-theme/woocommerce/archive-product.php`.
-    - Edit it to match your `shop.html` structure.
-    - Keep the "The Loop" (the PHP code that cycles through products) but wrap it in your custom CSS grid classes.
-3.  **The Product Page (`single-product.php`):**
-    - Copy `themes/asili-gems-theme/woocommerce/single-product.php`.
-    - Match it to your `product.html` layout.
-    - Replace your static title `<h2>Tanzanite Ring</h2>` with `<?php the_title(); ?>`.
-    - Replace static price with `<?php echo $product->get_price_html(); ?>`.
+---
 
-## Phase 5: Uploading to Live Site
-1.  **Zip It:** Compress your `asili-gems-theme` folder into a `.zip` file.
-2.  **Upload:** Go to WordPress Dashboard > Appearance > Themes > Add New > Upload Theme.
-3.  **Activate:** Click "Activate".
-4.  **Populate:** Go to Products > Add New in WordPress and enter your real product data (which will now automatically appear in your custom designs).
+## Phase 4: The Custom Footer
+Replace the default Neve footer.
+
+1.  **Navigate:** Neve > Custom Layouts > Add New.
+2.  **Name:** `Custom Asili Footer`.
+3.  **Editor:** Use the **Custom HTML** block.
+4.  **Content:** Paste your `<footer>...</footer>` HTML code.
+5.  **Neve Settings:**
+    - **Hooks:** `footer` (Action: **Replace**).
+    - **Conditions:** Entire Website.
+6.  **Publish.**
+
+---
+
+## Phase 5: The "Headless" Shop (Grid)
+We will hide the default WooCommerce grid and inject your custom grid container.
+
+1.  **Navigate:** Neve > Custom Layouts > Add New.
+2.  **Name:** `Custom Shop Grid`.
+3.  **Editor:** Custom HTML block.
+4.  **Content:**
+    ```html
+    <div id="asili-shop-container" class="asili-container" style="padding: 100px 0;">
+        <div class="text-center">
+            <h1 class="hero-title" style="font-size: 3rem; color: var(--c-text-main);">Shop</h1>
+        </div>
+        <!-- The Grid where JS will inject cards -->
+        <div id="product-grid" class="grid-3" style="margin-top: 40px;">
+            <!-- Loading State -->
+            <p style="grid-column: 1/-1; text-align: center;">Loading gemstones...</p>
+        </div>
+    </div>
+    
+    <script>
+    // Fetch WooCommerce Products via REST API (Public Endpoint)
+    // Note: You must enable 'Enable the legacy REST API' in WC Settings > Advanced > Legacy API
+    // OR use the native WC AJAX endpoint if you don't want to expose keys.
+    
+    // FOR NOW: We will use the 'products' array from your static mock data 
+    // to prove the layout works, then switch to real data later.
+    const mockProducts = [
+        { id: 1, title: "Tanzanite Royal Pendant", price: "$3,200", img: "..." },
+        { id: 2, title: "Tsavorite Eternity Ring", price: "$4,500", img: "..." }
+    ];
+
+    const grid = document.getElementById('product-grid');
+    if(grid) {
+        grid.innerHTML = mockProducts.map(p => `
+            <div class="product-card">
+                <div class="prod-img-wrapper"><img src="${p.img}" class="prod-img"></div>
+                <h3 class="prod-name">${p.title}</h3>
+                <div class="prod-price">${p.price}</div>
+            </div>
+        `).join('');
+    }
+    </script>
+    ```
+5.  **Neve Settings:**
+    - **Hooks:** `neve_before_content` (Action: **Replace**). 
+    - **Conditions:** Archive > Product Archive (Shop).
+6.  **Publish.**
+
+---
+
+## Summary of the "No-PHP" Workflow
+1.  **Styles:** Copied into **Customize > Additional CSS**.
+2.  **Structure:** Copied into **Neve Custom Layouts** (Header/Footer).
+3.  **Logic:** Injected via **Custom Layouts** (Script tags in `wp_footer`).
+4.  **Dynamic Content:** JavaScript fetches data and draws HTML into empty `<div>` containers you placed via Layouts.
