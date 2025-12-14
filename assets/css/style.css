@@ -681,3 +681,180 @@ footer {
     .drawer-link { font-size: 2rem; } /* Mobile drawer link fix */
     .drawer-nav { gap: 10px; }
 }
+
+/* ========================================= */
+/*  NEW HERO SLIDER STYLES (Variant S)       */
+/* ========================================= */
+
+.hero-slider {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    width: 100%;
+}
+
+.slides-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+    transform: scale(1.05); /* Start slightly zoomed in for Ken Burns effect */
+    z-index: 1;
+}
+
+.slide.active-slide {
+    opacity: 1;
+    transform: scale(1); /* Zoom out effect */
+    z-index: 2;
+}
+
+/* Gradient Overlay - Darker for readability */
+.slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.3) 0%, 
+        rgba(0,0,0,0.1) 50%, 
+        rgba(0,0,0,0.4) 100%);
+    z-index: 1;
+}
+
+/* Slide Content - Centered Glass Card Style */
+.slide-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    padding: 4rem 2rem;
+    
+    /* Crystal Glass Effect */
+    background: rgba(255, 255, 255, 0.015); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-radius: 2px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    
+    opacity: 0;
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+    transform: translate(-50%, -40%); /* Start slightly lower */
+}
+
+.active-slide .slide-content {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.hero-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 300;
+    color: #ffffff;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    letter-spacing: 4px;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.hero-slogan-top {
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    color: var(--c-secondary);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    font-family: var(--f-btn);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.cta-button:hover {
+    background: #ffffff;
+    color: var(--c-text-main);
+    border-color: #ffffff;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+
+/* Slider Navigation Dots */
+.slider-nav {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 15px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.dot:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.dot.active-dot {
+    background: #ffffff;
+    border-color: #ffffff;
+    transform: scale(1.2);
+}
+
+/* Mobile Adjustments for Slider */
+@media (max-width: 768px) {
+    .slide-content {
+        padding: 3rem 1.5rem;
+        background: rgba(0,0,0,0.2);
+        backdrop-filter: blur(8px);
+        width: 95%;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+    .cta-button {
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 20px;
+    }
+}
