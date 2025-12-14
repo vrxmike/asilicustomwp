@@ -158,8 +158,8 @@
         .slider-nav {
             position: absolute;
             bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 40px; /* Aligned to the left */
+            transform: none; /* Remove horizontal centering */
             z-index: 10;
             display: flex;
             gap: 15px;
@@ -206,6 +206,9 @@
             }
             .slide-content {
                 bottom: 10%; /* Adjust bottom position for mobile if needed */
+            }
+            .slider-nav {
+                left: 20px; /* Adjust left position for mobile */
             }
         }
     </style>
@@ -367,21 +370,21 @@
         <div class="slides-container">
             <div class="slide active-slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/11/IMG-20251108-WA0129-scaled.jpg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">Asili Gems</p>
+                    <p class="hero-slogan-top">The Asili Collection</p>
                     <h1 class="hero-title">Asili Means Origin, <br>The Beginning of Real Beauty</h1>
                     <a href="#products" class="cta-button">Explore The Collection</a>
                 </div>
             </div>
             <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">Asili Gems</p>
+                    <p class="hero-slogan-top">The Asili Collection</p>
                     <h1 class="hero-title">Rare. Red. Radiant.<br>The Pigeon's Blood Collection</h1>
                     <a href="#products" class="cta-button">Discover Ruby</a>
                 </div>
             </div>
             <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Image-20c4e2.svg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">Asili Gems</p>
+                    <p class="hero-slogan-top">The Asili Collection</p>
                     <h1 class="hero-title">Timeless Elegance<br>Hand-Crafted in 18k Gold</h1>
                     <a href="#products" class="cta-button">View Gold Series</a>
                 </div>
