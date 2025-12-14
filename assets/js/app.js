@@ -92,3 +92,70 @@ function updateQty(change) {
     if (val < 1) val = 1;
     qtyInput.value = val;
 }
+
+/* ========================================= */
+/*  HERO SLIDER LOGIC (Variant S)            */
+/* ========================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    const slideIntervalTime = 6000; // 6 seconds
+    let slideInterval;
+
+    function showSlide(index) {
+        // Wrap around index
+        if (index >= slides.length) currentSlide = 0;
+        else if (index < 0) currentSlide = slides.length - 1;
+        else currentSlide = index;
+
+        // Update Slides
+        slides.forEach((slide, i) => {
+            if (i === currentSlide) {
+                slide.classList.add('active-slide');
+            } else {
+                slide.classList.remove('active-slide');
+            }
+        });
+
+        // Update Dots
+        dots.forEach((dot, i) => {
+            if (i === currentSlide) {
+                dot.classList.add('active-dot');
+            } else {
+                dot.classList.remove('active-dot');
+            }
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Auto Rotation
+    function startSlider() {
+        slideInterval = setInterval(nextSlide, slideIntervalTime);
+    }
+
+    function resetTimer() {
+        clearInterval(slideInterval);
+        startSlider();
+    }
+
+    // Event Listeners for Dots (Manual Control)
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const index = parseInt(dot.getAttribute('data-slide-index'));
+            showSlide(index);
+            resetTimer(); // Reset timer so it doesn't jump immediately after click
+        });
+    });
+
+    // Initialize
+    if(slides.length > 0) {
+        // Ensure first slide is shown (already in HTML, but good for JS state)
+        showSlide(0); 
+        startSlider();
+    }
+});
