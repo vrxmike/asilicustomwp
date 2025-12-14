@@ -734,82 +734,72 @@ footer {
     z-index: 1;
 }
 
-/* Slide Content - Centered Glass Card Style */
+/* Slide Content - Bottom Centered, Animated */
 .slide-content {
     position: absolute;
-    top: 50%;
+    bottom: 8%; /* Positioned at the bottom with breathing room */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%) translateY(50px); /* Start lower for animation */
     z-index: 3;
     text-align: center;
     width: 90%;
-    max-width: 800px;
-    padding: 4rem 2rem;
-    
-    /* Crystal Glass Effect */
-    background: rgba(255, 255, 255, 0.015); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-top: 1px solid rgba(255,255,255,0.3);
-    border-left: 1px solid rgba(255,255,255,0.3);
-    border-radius: 2px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* Wider container for desktop */
+    padding: 0;
     
     opacity: 0;
-    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
-    transform: translate(-50%, -40%); /* Start slightly lower */
+    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.2, 1, 0.3, 1) 0.5s; /* Smooth ease-out slide */
 }
 
 .active-slide .slide-content {
     opacity: 1;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%) translateY(0); /* Settle in place */
 }
 
 .hero-title {
     font-family: 'Archivo', sans-serif;
     font-weight: 300;
     color: #ffffff;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    letter-spacing: 4px;
+    font-size: clamp(3rem, 6vw, 5.5rem); /* Responsive but large */
+    letter-spacing: 2px;
     line-height: 1.1;
-    margin-bottom: 2rem;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 
 .hero-slogan-top {
     font-family: 'Bodoni Moda', serif;
     font-style: italic;
     color: var(--c-secondary);
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
     margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .cta-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 40px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.4);
+    padding: 18px 50px; /* Generous padding for desktop */
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.6);
     color: white;
     font-family: var(--f-btn);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     transition: all 0.4s ease;
     text-decoration: none;
     margin-top: 1rem;
+    backdrop-filter: blur(5px);
 }
 
-.cta-button:hover {
-    background: #ffffff;
-    color: var(--c-text-main);
-    border-color: #ffffff;
-    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+/* Ensure content doesn't hit the very bottom on small screens if title is long */
+@media (max-width: 768px) {
+    .slide-content {
+        bottom: 15%; /* Push it up slightly on mobile to clear potential browser bars */
+        width: 95%;
+    }
 }
-
-/* Slider Navigation Dots */
 .slider-nav {
     position: absolute;
     bottom: 40px;
@@ -844,8 +834,6 @@ footer {
 @media (max-width: 768px) {
     .slide-content {
         padding: 3rem 1.5rem;
-        background: rgba(0,0,0,0.2);
-        backdrop-filter: blur(8px);
         width: 95%;
     }
     .hero-title {
