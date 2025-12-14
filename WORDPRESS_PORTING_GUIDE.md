@@ -6,6 +6,7 @@
 - **Neve Pro:** For "Custom Layouts" (Header, Footer, Content Injection).
 - **Otter Pro:** For advanced blocks (if needed) or simply for the "Custom HTML" block capability.
 - **WooCommerce:** The backend engine.
+- **Media Library:** All images/videos uploaded via WP Admin.
 
 ---
 
@@ -68,15 +69,17 @@ We need your JavaScript (`app.js`) to run on every page to handle the Mobile Dra
 ## Phase 3: The Custom Header
 Replace the default Neve header with your HTML.
 
-1.  **Navigate:** Neve > Custom Layouts > Add New.
-2.  **Name:** `Custom Asili Header`.
-3.  **Editor:** Use the **Custom HTML** block.
-4.  **Content:** Paste your `<header>...</header>` HTML code (from `index.html`).
-    - *Crucial Update:* Change the `<a>` links. Instead of `href="index.html"`, use `href="/"`.
-5.  **Neve Settings:**
+1.  **Upload Logo:** Go to **Media > Add New** and upload your logo. Copy the File URL.
+2.  **Navigate:** Neve > Custom Layouts > Add New.
+3.  **Name:** `Custom Asili Header`.
+4.  **Editor:** Use the **Custom HTML** block.
+5.  **Content:** Paste your `<header>...</header>` HTML code.
+    - *Crucial Update 1:* Change the `<a>` links. Instead of `href="index.html"`, use `href="/"`.
+    - *Crucial Update 2:* Find the `<img>` tag for your logo and replace the `src` with the **File URL** you copied from the Media Library.
+6.  **Neve Settings:**
     - **Hooks:** `header` (Action: **Replace**).
     - **Conditions:** Entire Website.
-6.  **Publish.**
+7.  **Publish.**
 
 ---
 
@@ -97,10 +100,11 @@ Replace the default Neve footer.
 ## Phase 5: The "Headless" Shop (Grid)
 We will hide the default WooCommerce grid and inject your custom grid container.
 
-1.  **Navigate:** Neve > Custom Layouts > Add New.
-2.  **Name:** `Custom Shop Grid`.
-3.  **Editor:** Custom HTML block.
-4.  **Content:**
+1.  **Upload Product Images:** Upload all product photos to **Media > Add New**. Copy their URLs.
+2.  **Navigate:** Neve > Custom Layouts > Add New.
+3.  **Name:** `Custom Shop Grid`.
+4.  **Editor:** Custom HTML block.
+5.  **Content:**
     ```html
     <div id="asili-shop-container" class="asili-container" style="padding: 100px 0;">
         <div class="text-center">
@@ -121,8 +125,8 @@ We will hide the default WooCommerce grid and inject your custom grid container.
     // FOR NOW: We will use the 'products' array from your static mock data 
     // to prove the layout works, then switch to real data later.
     const mockProducts = [
-        { id: 1, title: "Tanzanite Royal Pendant", price: "$3,200", img: "..." },
-        { id: 2, title: "Tsavorite Eternity Ring", price: "$4,500", img: "..." }
+        { id: 1, title: "Tanzanite Royal Pendant", price: "$3,200", img: "INSERT_WP_MEDIA_URL_HERE" },
+        { id: 2, title: "Tsavorite Eternity Ring", price: "$4,500", img: "INSERT_WP_MEDIA_URL_HERE" }
     ];
 
     const grid = document.getElementById('product-grid');
@@ -137,15 +141,16 @@ We will hide the default WooCommerce grid and inject your custom grid container.
     }
     </script>
     ```
-5.  **Neve Settings:**
+6.  **Neve Settings:**
     - **Hooks:** `neve_before_content` (Action: **Replace**). 
     - **Conditions:** Archive > Product Archive (Shop).
-6.  **Publish.**
+7.  **Publish.**
 
 ---
 
 ## Summary of the "No-PHP" Workflow
 1.  **Styles:** Copied into **Customize > Additional CSS**.
-2.  **Structure:** Copied into **Neve Custom Layouts** (Header/Footer).
-3.  **Logic:** Injected via **Custom Layouts** (Script tags in `wp_footer`).
-4.  **Dynamic Content:** JavaScript fetches data and draws HTML into empty `<div>` containers you placed via Layouts.
+2.  **Images:** Uploaded to **Media Library**, URLs copied into HTML.
+3.  **Structure:** Copied into **Neve Custom Layouts** (Header/Footer).
+4.  **Logic:** Injected via **Custom Layouts** (Script tags in `wp_footer`).
+5.  **Dynamic Content:** JavaScript fetches data and draws HTML into empty `<div>` containers.
