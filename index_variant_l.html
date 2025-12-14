@@ -18,6 +18,9 @@
     <!-- VARIANT L OVERRIDES (Enhanced UI/UX) -->
     <style>
         /* --- 1. HEADER REFINEMENTS --- */
+        /* Goal: Make it feel like a luxury fashion magazine header. 
+           White text initially for contrast over hero, switching to dark on scroll. */
+
         :root {
             --glass-border: 1px solid rgba(255, 255, 255, 0.15);
             --glass-bg: rgba(255, 255, 255, 0.02);
@@ -37,7 +40,7 @@
         }
         
         .header-wrapper:not(.scrolled) .header-top {
-            background: rgba(10, 20, 15, 0.8);
+            background: rgba(10, 20, 15, 0.8); /* Dark top bar */
             color: rgba(255,255,255,0.8);
             border-bottom: none;
         }
@@ -47,7 +50,7 @@
             font-family: var(--f-btn);
             font-weight: 500;
             letter-spacing: 2px;
-            font-size: 0.75rem; 
+            font-size: 0.75rem; /* Smaller, cleaner */
             text-transform: uppercase;
             padding: 10px 0;
         }
@@ -72,22 +75,22 @@
         /* Ultra-Premium Glass Card */
         .hero-content {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); 
+            backdrop-filter: blur(10px); /* Stronger blur */
             -webkit-backdrop-filter: blur(10px);
             border: var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.3); 
-            border-left: 1px solid rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.3); /* Catching light on top edge */
+            border-left: 1px solid rgba(255,255,255,0.3); /* Catching light on left edge */
             box-shadow: var(--glass-shadow);
-            border-radius: 2px;
+            border-radius: 2px; /* Sharper corners for modern luxury */
             padding: 5rem 3rem;
             max-width: 900px;
         }
 
         /* Signature Text */
         .hero-slogan-top {
-            font-family: var(--f-hero);
+            font-family: var(--f-hero); /* Bodoni */
             font-style: italic;
-            color: var(--c-secondary); 
+            color: var(--c-secondary); /* Gold Signature */
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             margin-bottom: 1.5rem;
             opacity: 0.9;
@@ -97,11 +100,11 @@
 
         /* Headline - High Contrast, Modern Editorial */
         .hero-title {
-            font-family: 'Archivo', sans-serif;
-            font-weight: 300; 
+            font-family: 'Archivo', sans-serif; /* Clean, geometric sans */
+            font-weight: 300; /* Thin weight looks expensive */
             color: #ffffff;
             font-size: clamp(2.5rem, 7vw, 5rem);
-            letter-spacing: 4px;
+            letter-spacing: 4px; /* Wide tracking */
             line-height: 1.1;
             margin-bottom: 3rem;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -124,13 +127,13 @@
             border-color: #ffffff;
             box-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
-        .hero-btn::before { display: none; } 
+        .hero-btn::before { display: none; } /* Remove old fill effect for this new glass one */
 
         /* --- 3. MOBILE OPTIMIZATIONS FOR NEW UI --- */
         @media (max-width: 768px) {
             .hero-content {
                 padding: 3rem 1.5rem;
-                background: rgba(0,0,0,0.2); 
+                background: rgba(0,0,0,0.2); /* Darker glass on mobile for readability */
                 backdrop-filter: blur(8px);
                 border: none;
                 border-top: 1px solid rgba(255,255,255,0.2);
@@ -145,7 +148,7 @@
                 margin-bottom: 1rem;
             }
             .brand-logo svg {
-                fill: white; 
+                fill: white; /* Force white logo on mobile initially */
             }
             .header-wrapper.scrolled .brand-logo svg {
                 fill: var(--c-text-main);
@@ -177,7 +180,7 @@
                     <button class="icon-btn desktop-only" aria-label="Wishlist"><i class="far fa-heart"></i></button>
                 </div>
                 
-                <!-- LOGO -->
+                <!-- LOGO (SVG - Color handled by CSS) -->
                 <a href="#" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
                       <defs>
@@ -305,25 +308,6 @@
                 <a href="#" class="drawer-link"><span>04</span> Journal</a>
                 <a href="#" class="drawer-link"><span>05</span> Contact</a>
             </nav>
-            <div class="drawer-search">
-                 <input type="text" placeholder="Search gems...">
-                 <button><i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-
-        <!-- Drawer Footer -->
-        <div class="drawer-footer">
-            <div class="drawer-utils">
-                <a href="#" class="drawer-util-link">My Account</a>
-                <a href="#" class="drawer-util-link">Wishlist</a>
-                <a href="#" class="drawer-util-link">Track Order</a>
-            </div>
-            <div class="drawer-socials">
-                <a href="#" class="drawer-social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="drawer-social-icon"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="drawer-social-icon"><i class="fab fa-pinterest-p"></i></a>
-                <a href="#" class="drawer-social-icon"><i class="fab fa-twitter"></i></a>
-            </div>
         </div>
     </div>
 
@@ -353,9 +337,8 @@
         </div>
     </header>
 
-    <!-- USP -->
-    <!-- (USP Section Removed as per request) -->
-
+    <!-- USP / PRODUCTS / FOOTER (Standard Content from Index) -->
+    <!-- ... Keeping it brief for the variant file ... -->
     <!-- PRODUCTS -->
     <section id="products" class="products-section">
         <div class="asili-container">
@@ -371,131 +354,35 @@
                 <div class="product-card group">
                     <div class="prod-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1599643478518-17488fbbcd75?q=80&w=1000" alt="Tanzanite" class="prod-img">
-                        <div class="quick-view-trigger desktop-only">
-                            <button class="btn-quick" onclick="openModal(0)">Quick View</button>
-                        </div>
                     </div>
                     <span class="prod-cat">Necklaces</span>
                     <h3 class="prod-name">Tanzanite Royal Pendant</h3>
                     <div class="prod-price">$3,200.00</div>
-                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
-                        <button class="btn-quick" onclick="openModal(0)">Quick View</button>
-                    </div>
                 </div>
                 <div class="product-card group">
                     <div class="prod-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000" alt="Tsavorite" class="prod-img">
-                        <div class="quick-view-trigger desktop-only">
-                            <button class="btn-quick" onclick="openModal(1)">Quick View</button>
-                        </div>
                     </div>
                     <span class="prod-cat">Rings</span>
                     <h3 class="prod-name">Tsavorite Eternity Ring</h3>
                     <div class="prod-price">$4,500.00</div>
-                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
-                        <button class="btn-quick" onclick="openModal(1)">Quick View</button>
-                    </div>
                 </div>
                 <div class="product-card group">
                     <div class="prod-img-wrapper">
                         <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1000" alt="Gold Cuffs" class="prod-img">
-                        <div class="quick-view-trigger desktop-only">
-                            <button class="btn-quick" onclick="openModal(2)">Quick View</button>
-                        </div>
                     </div>
                     <span class="prod-cat">Bracelets</span>
                     <h3 class="prod-name">Serengeti Gold Cuffs</h3>
                     <div class="prod-price">$2,850.00</div>
-                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
-                        <button class="btn-quick" onclick="openModal(2)">Quick View</button>
-                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- OFFER -->
-    <section class="offer-section">
-        <div class="asili-container">
-            <div class="grid-2">
-                <div class="offer-text">
-                    <h2>Orelia Jewellery <br>Set Limited <br><span class="highlight">Offer</span></h2>
-                    <p>Experience the pinnacle of craftsmanship with our exclusive Orelia collection. Hand-picked stones set in pure 18k gold. Available for a limited time only.</p>
-                    <a href="#" class="btn-outline">Shop The Set</a>
-                </div>
-                <div class="offer-image">
-                    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2670" style="border-radius: 4px;" alt="Gift Box">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="testimonials-section">
-        <div class="asili-container text-center">
-            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p class="quote">"I was blown away by the quality of the Tanzanite. It's truly a piece of Africa's heart. The packaging was exquisite and delivery was faster than expected."</p>
-            <div class="flex-center" style="flex-direction: column;">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574" class="user-img" alt="User">
-                <p class="text-gold uppercase" style="font-family: var(--f-btn); font-size: 0.9rem; letter-spacing: 1px;">Sarah Jenkins</p>
-                <p style="color: var(--c-text-sub); font-size: 0.8rem;">New York, USA</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEWSLETTER (Replaces Promo Banner) -->
-    <section class="newsletter-section">
-        <div class="asili-container">
-            <h2 class="newsletter-title">Join the Asili Family</h2>
-            <p class="newsletter-desc">Be the first to know about new collections, exclusive events, and the stories behind our ethically sourced gemstones.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
-                <button type="submit" class="btn-subscribe">Subscribe</button>
-            </form>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
         <div class="asili-container">
-            <div class="footer-grid">
-                <!-- Left Column -->
-                <div class="footer-col">
-                    <h4>THE BRAND</h4>
-                    <ul>
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Our Craft</a></li>
-                        <li><a href="#">The Source</a></li>
-                        <li><a href="#">Journal</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Middle Column -->
-                <div class="footer-col">
-                    <h4>SHOP</h4>
-                    <ul>
-                        <li><a href="#">The Asili Collection</a></li>
-                        <li><a href="#">Gemstones</a></li>
-                        <li><a href="#">High Jewellery</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Right Column -->
-                <div class="footer-col">
-                    <h4>CUSTOMER CARE</h4>
-                    <ul>
-                        <li><a href="#">Shipping and Delivery</a></li>
-                        <li><a href="#">Returns and Exchanges</a></li>
-                        <li><a href="#">Care and Materials</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- NEW: Footer Bottom Row (Socials + Copyright) -->
             <div class="footer-bottom-row">
-                <!-- Relocated Trust Signals -->
                 <div class="trust-row">
                     <span>GIA Certified</span>
                     <i class="fas fa-gem trust-divider"></i>
@@ -503,51 +390,10 @@
                     <i class="fas fa-gem trust-divider"></i>
                     <span>Global Shipping</span>
                 </div>
-
-                <div class="footer-socials">
-                    <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="footer-social-link"><i class="fab fa-pinterest-p"></i></a>
-                    <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
-                </div>
-                <div class="copyright">&copy; 2026 Asili Gems. All Rights Reserved.</div>
+                <div class="copyright">&copy; 2026 Asili Gems. Variant L Build.</div>
             </div>
         </div>
     </footer>
-
-    <!-- RESPONSIVE MODAL -->
-    <div class="modal-backdrop" id="productModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            <div class="modal-img-container">
-                <img id="modalImg" src="" alt="Product" class="modal-img">
-            </div>
-            <div class="modal-details">
-                <div class="stars" style="font-size: 0.8rem; margin-bottom: 0.5rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="color: #666; margin-left: 5px;">(5)</span></div>
-                <h2 id="modalTitle" class="prod-name" style="font-size: 2.5rem; line-height: 1.1; text-align: left;"></h2>
-                <div id="modalPrice" class="prod-price" style="font-size: 2rem; margin-bottom: 1.5rem;"></div>
-                <p id="modalDesc" style="color: var(--c-text-sub); margin-bottom: 2rem; line-height: 1.8;">
-                    A rare, ethically sourced Tanzanite set in 18k recycled gold. Hand-hammered texture reflects the raw beauty of the origin.
-                </p>
-                
-                <!-- Desktop Action Layout -->
-                <div class="modal-actions-wrapper">
-                    <div style="display: flex;" class="modal-actions-inner">
-                        <div class="qty-wrapper">
-                            <button class="qty-btn" onclick="updateQty(-1)"><i class="fas fa-minus"></i></button>
-                            <input type="text" value="1" id="qtyInput" class="qty-input" readonly>
-                            <button class="qty-btn" onclick="updateQty(1)"><i class="fas fa-plus"></i></button>
-                        </div>
-                        <button class="btn-outline" style="flex: 1;">Add to Bag</button>
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; font-size: 0.7rem; color: var(--c-text-sub); text-transform: uppercase; letter-spacing: 1px;">
-                    <i class="fas fa-check" style="color: var(--c-extra-1); margin-right: 5px;"></i> In Stock
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- JS Logic -->
     <script src="assets/js/products.js" defer></script>
