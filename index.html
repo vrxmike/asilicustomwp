@@ -3,155 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>Asili Gems - The Origin (Variant L)</title>
+    <title>Asili Gems - Slider Test</title>
     
     <!-- FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:opsz,wght@9..144,300..900&family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:opsz,wght@9..144,300..900&family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CORE STYLES -->
+    <!-- CUSTOM STYLES -->
     <link rel="stylesheet" href="assets/css/palette.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- VARIANT L OVERRIDES (Enhanced UI/UX) -->
+    
+    <!-- VARIANT L OVERRIDES -->
     <style>
-        /* --- 1. HEADER REFINEMENTS --- */
         :root {
             --glass-border: 1px solid rgba(255, 255, 255, 0.15);
             --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
         }
-
-        .header-wrapper {
-            transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease;
-        }
-
-        /* Initial State (Transparent/Dark Mode feel for Hero) */
+        .header-wrapper { transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease; }
         .header-wrapper:not(.scrolled) .nav-link,
         .header-wrapper:not(.scrolled) .icon-btn,
-        .header-wrapper:not(.scrolled) .brand-logo {
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        .header-wrapper:not(.scrolled) .brand-logo { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header-wrapper:not(.scrolled) .header-top { background: rgba(10, 20, 15, 0.8); color: rgba(255,255,255,0.8); border-bottom: none; }
+        .nav-link { font-family: var(--f-btn); font-weight: 500; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; padding: 10px 0; }
+        .nav-link::after { background: var(--c-secondary); height: 2px; bottom: 0; }
+        @media (max-width: 768px) {
+            .brand-logo svg { fill: white; }
+            .header-wrapper.scrolled .brand-logo svg { fill: var(--c-text-main); }
+            .mobile-toggle { color: white; }
+            .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
         }
         
-        .header-wrapper:not(.scrolled) .header-top {
-            background: rgba(10, 20, 15, 0.8);
-            color: rgba(255,255,255,0.8);
-            border-bottom: none;
+        /* NEW HERO SLIDER STYLES (Variant M - No Glass) */
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 180px; /* Add padding to push content below the fixed header */
+            box-sizing: border-box; /* Ensure padding is included in height calculation */
         }
 
-        /* Nav Link Animations (Center Out Gold) */
-        .nav-link {
-            font-family: var(--f-btn);
-            font-weight: 500;
-            letter-spacing: 2px;
-            font-size: 0.75rem; 
-            text-transform: uppercase;
-            padding: 10px 0;
-        }
-        
-        .nav-link::after {
-            background: var(--c-secondary); /* Gold */
-            height: 2px;
-            bottom: 0;
+        .slides-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        /* --- 2. HERO SECTION ENHANCEMENTS --- */
-        
-        /* Darker gradient overlay to ensure white text pops */
-        .hero-gradient {
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+            transform: scale(1.05); /* Start slightly zoomed in for Ken Burns effect */
+            z-index: 1;
+        }
+
+        .slide.active-slide {
+            opacity: 1;
+            transform: scale(1); /* Zoom out effect */
+            z-index: 2;
+        }
+
+        /* Darker Gradient Overlay for Text Readability */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
             background: linear-gradient(to bottom, 
-                rgba(0,0,0,0.4) 0%, 
-                rgba(0,0,0,0.1) 50%, 
-                rgba(0,0,0,0.2) 80%, 
-                var(--c-bg-page) 100%);
+                rgba(0,0,0,0.3) 0%, 
+                rgba(0,0,0,0.2) 50%, 
+                rgba(0,0,0,0.5) 100%);
+            z-index: 1;
         }
 
-        /* Ultra-Premium Glass Card */
-        .hero-content {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            border: var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.3); 
-            border-left: 1px solid rgba(255,255,255,0.3);
-            box-shadow: var(--glass-shadow);
-            border-radius: 2px;
-            padding: 5rem 3rem;
-            max-width: 900px;
+        /* Slide Content - Bottom Centered, Animated */
+        .slide-content {
+            position: absolute;
+            bottom: 8%; /* Positioned at the bottom with breathing room */
+            left: 50%;
+            transform: translateX(-50%) translateY(50px); /* Start lower for animation */
+            z-index: 3;
+            text-align: center;
+            width: 90%;
+            max-width: 1000px;
+            padding: 0;
+            
+            opacity: 0;
+            transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.2, 1, 0.3, 1) 0.5s;
         }
 
-        /* Signature Text */
-        .hero-slogan-top {
-            font-family: var(--f-hero);
-            font-style: italic;
-            color: var(--c-secondary); 
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-            font-weight: 400;
-            letter-spacing: -0.5px;
+        .active-slide .slide-content {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* Headline - High Contrast, Modern Editorial */
         .hero-title {
             font-family: 'Archivo', sans-serif;
-            font-weight: 300; 
+            font-weight: 300;
             color: #ffffff;
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            letter-spacing: 4px;
-            line-height: 1.1;
-            margin-bottom: 3rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            font-size: clamp(2rem, 5vw, 3.8rem); /* Reduced font size by 30-40% */
+            letter-spacing: 2px;
+            line-height: 1.35; /* Increased line-height */
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.5); /* Stronger shadow for readability */
         }
 
-        /* Glass Button */
-        .hero-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: white;
-            font-size: 0.8rem;
-            padding: 16px 40px;
+        .hero-slogan-top {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            color: var(--c-secondary); /* Gold */
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 45px;
+            background: #ffffff; /* Solid white background */
+            border: 1px solid #ffffff; /* White border */
+            color: #000000; /* Black text */
+            font-family: var(--f-btn);
+            font-size: 0.9rem;
             letter-spacing: 3px;
+            text-transform: uppercase;
             transition: all 0.4s ease;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(0px); /* Remove blur for solid button */
         }
-        
-        .hero-btn:hover {
-            background: #ffffff;
-            color: var(--c-text-main);
-            border-color: #ffffff;
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
-        }
-        .hero-btn::before { display: none; } 
 
-        /* --- 3. MOBILE OPTIMIZATIONS FOR NEW UI --- */
+        .cta-button:hover {
+            background: rgba(255,255,255,0.8); /* Slightly transparent white on hover */
+            color: #000000;
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 0 40px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Slider Navigation Dots */
+        .slider-nav {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .dot:hover { background: rgba(255,255,255,0.4); }
+
+        .dot.active-dot {
+            background: #ffffff;
+            border-color: #ffffff;
+            transform: scale(1.3);
+        }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .hero-content {
-                padding: 3rem 1.5rem;
-                background: rgba(0,0,0,0.2); 
-                backdrop-filter: blur(8px);
-                border: none;
-                border-top: 1px solid rgba(255,255,255,0.2);
+            .hero-slider {
+                padding-top: 100px; /* Adjust padding for mobile header height */
             }
             .hero-title {
                 font-size: 2.2rem;
-                letter-spacing: 2px;
-                font-weight: 400;
+                letter-spacing: 1px;
+                line-height: 1.2;
             }
             .hero-slogan-top {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 margin-bottom: 1rem;
             }
-            .brand-logo svg {
-                fill: white; 
+            .cta-button {
+                width: auto;
+                max-width: 90%;
+                padding: 14px 30px;
+                font-size: 0.75rem;
+                letter-spacing: 2px;
             }
-            .header-wrapper.scrolled .brand-logo svg {
-                fill: var(--c-text-main);
+            .slide-content {
+                bottom: 10%; /* Adjust bottom position for mobile if needed */
             }
-            .mobile-toggle { color: white; }
-            .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
         }
     </style>
 </head>
@@ -176,7 +231,6 @@
                     <button class="icon-btn desktop-only" aria-label="Search"><i class="fas fa-search"></i></button>
                     <button class="icon-btn desktop-only" aria-label="Wishlist"><i class="far fa-heart"></i></button>
                 </div>
-                
                 <!-- LOGO -->
                 <a href="#" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
@@ -194,17 +248,12 @@
                           <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
                         </linearGradient>
                       </defs>
-
                       <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
                           <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
                       </ellipse>
-
                       <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
-                      
                       <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
-
                       <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">SILI</text>
-
                       <g transform="translate(285, 90) scale(0.8)">
                         <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
                         <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
@@ -212,9 +261,7 @@
                         <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
                         <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
                       </g>
-
                       <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
-
                       <g transform="translate(405, 95) scale(0.7) rotate(15)">
                         <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
                         <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
@@ -222,11 +269,9 @@
                          <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
                           <polygon points="40,45 25,25 50,15" fill="#d35400"/>
                       </g>
-
                       <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">ems</text>
                     </svg>
                 </a>
-
                 <div class="actions-group actions-right">
                     <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
                     <button class="icon-btn" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="bag-count">2</span></button>
@@ -263,17 +308,12 @@
                           <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
                         </linearGradient>
                       </defs>
-
                       <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
                           <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
                       </ellipse>
-
                       <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
-                      
                       <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
-
                       <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">SILI</text>
-
                       <g transform="translate(285, 90) scale(0.8)">
                         <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
                         <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
@@ -281,9 +321,7 @@
                         <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
                         <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
                       </g>
-
                       <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
-
                       <g transform="translate(405, 95) scale(0.7) rotate(15)">
                         <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
                         <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
@@ -291,7 +329,6 @@
                          <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
                           <polygon points="40,45 25,25 50,15" fill="#d35400"/>
                       </g>
-
                       <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">ems</text>
                     </svg>
             </span>
@@ -310,8 +347,6 @@
                  <button><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
-
-        <!-- Drawer Footer -->
         <div class="drawer-footer">
             <div class="drawer-utils">
                 <a href="#" class="drawer-util-link">My Account</a>
@@ -327,34 +362,37 @@
         </div>
     </div>
 
-    <!-- HERO CAROUSEL -->
-    <header class="hero-section">
-        <div class="hero-carousel">
-            <!-- Slide 1: User's SVG -->
-            <div class="hero-slide active">
-                <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/11/IMG-20251108-WA0129-scaled.jpg" alt="Asili Gems Carousel Image 1">
+    <!-- NEW SLIDER HERO SECTION (Variant M - No Glass) -->
+    <section class="hero-slider">
+        <div class="slides-container">
+            <div class="slide active-slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/11/IMG-20251108-WA0129-scaled.jpg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Asili Means Origin, <br>The Beginning of Real Beauty</h1>
+                    <a href="#products" class="cta-button">Explore The Collection</a>
+                </div>
             </div>
-            <!-- Slide 2: Tanzanite / Blue Theme -->
-            <div class="hero-slide">
-                <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg" alt="Asili Gems Carousel Image 2">
+            <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Rare. Red. Radiant.<br>The Pigeon's Blood Collection</h1>
+                    <a href="#products" class="cta-button">Discover Ruby</a>
+                </div>
             </div>
-            <!-- Slide 3: Gold/Neutral Theme -->
-            <div class="hero-slide">
-                <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Image-20c4e2.svg" alt="Asili Gems Carousel Image 3">
+            <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Image-20c4e2.svg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Timeless Elegance<br>Hand-Crafted in 18k Gold</h1>
+                    <a href="#products" class="cta-button">View Gold Series</a>
+                </div>
             </div>
         </div>
-        
-        <div class="hero-gradient"></div>
-        
-        <div class="hero-content">
-            <p class="hero-slogan-top">Asili Gems</p>
-            <h1 class="hero-title">Asili Means Origin, <br>The Beginning of Real Beauty</h1>
-            <a href="#products" class="btn-outline hero-btn">EXPLORE THE COLLECTION</a>
+        <div class="slider-nav">
+            <span class="dot active-dot" data-slide-index="0"></span>
+            <span class="dot" data-slide-index="1"></span>
+            <span class="dot" data-slide-index="2"></span>
         </div>
-    </header>
-
-    <!-- USP -->
-    <!-- (USP Section Removed as per request) -->
+    </section>
 
     <!-- PRODUCTS -->
     <section id="products" class="products-section">
