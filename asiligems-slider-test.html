@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Asili Gems - Slider Test</title>
+    
+    <!-- FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:opsz,wght@9..144,300..900&family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CUSTOM STYLES -->
+    <link rel="stylesheet" href="assets/css/palette.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- VARIANT L OVERRIDES -->
+    <style>
+        :root {
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        .header-wrapper { transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease; }
+        .header-wrapper:not(.scrolled) .nav-link,
+        .header-wrapper:not(.scrolled) .icon-btn,
+        .header-wrapper:not(.scrolled) .brand-logo { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header-wrapper:not(.scrolled) .header-top { background: rgba(10, 20, 15, 0.8); color: rgba(255,255,255,0.8); border-bottom: none; }
+        .nav-link { font-family: var(--f-btn); font-weight: 500; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; padding: 10px 0; }
+        .nav-link::after { background: var(--c-secondary); height: 2px; bottom: 0; }
+        @media (max-width: 768px) {
+            .brand-logo svg { fill: white; }
+            .header-wrapper.scrolled .brand-logo svg { fill: var(--c-text-main); }
+            .mobile-toggle { color: white; }
+            .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header-wrapper" id="mainHeader">
+        <div class="header-top">
+            <div class="asili-container flex-between">
+                <span style="font-size: 10px; letter-spacing: 1px;">Ethical Sourcing • Global Shipping</span>
+                <div class="utility-links">
+                    <a href="#">Concierge</a>
+                    <a href="#">Boutiques</a>
+                    <a href="#">Account</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="asili-container main-bar-layout">
+                <div class="actions-group actions-left">
+                    <button class="mobile-toggle" onclick="toggleDrawer()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Wishlist"><i class="far fa-heart"></i></button>
+                </div>
+                <!-- LOGO -->
+                <a href="#" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
+                      <defs>
+                        <pattern id="tribalPat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                          <rect width="20" height="20" fill="currentColor"/>
+                          <path d="M0,5 L20,5 M0,10 L20,10 M0,15 L20,15" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+                          <path d="M5,0 L5,20 M10,0 L10,20 M15,0 L15,20" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+                          <circle cx="2.5" cy="2.5" r="1.5" fill="#d9534f"/>
+                          <circle cx="12.5" cy="12.5" r="1.5" fill="#5cb85c"/>
+                          <circle cx="17.5" cy="7.5" r="1.5" fill="#f0ad4e"/>
+                        </pattern>
+                        <linearGradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" style="stop-color:#e67e22;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
+                          <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
+                      </ellipse>
+                      <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
+                      <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
+                      <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">SILI</text>
+                      <g transform="translate(285, 90) scale(0.8)">
+                        <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
+                        <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
+                        <polygon points="0,10 20,0 20,20" fill="#1e8449"/>
+                        <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
+                        <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
+                      </g>
+                      <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
+                      <g transform="translate(405, 95) scale(0.7) rotate(15)">
+                        <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
+                        <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
+                        <polygon points="0,15 25,0 25,25" fill="#d35400"/>
+                         <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
+                          <polygon points="40,45 25,25 50,15" fill="#d35400"/>
+                      </g>
+                      <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">ems</text>
+                    </svg>
+                </a>
+                <div class="actions-group actions-right">
+                    <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="bag-count">2</span></button>
+                </div>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">Collections</a></li>
+                <li><a href="#" class="nav-link">The Brand</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <span class="drawer-brand">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
+                      <defs>
+                        <pattern id="tribalPat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                          <rect width="20" height="20" fill="#1a1a1a"/>
+                          <path d="M0,5 L20,5 M0,10 L20,10 M0,15 L20,15" stroke="#444" stroke-width="1"/>
+                          <path d="M5,0 L5,20 M10,0 L10,20 M15,0 L15,20" stroke="#444" stroke-width="1"/>
+                          <circle cx="2.5" cy="2.5" r="1.5" fill="#d9534f"/>
+                          <circle cx="12.5" cy="12.5" r="1.5" fill="#5cb85c"/>
+                          <circle cx="17.5" cy="7.5" r="1.5" fill="#f0ad4e"/>
+                        </pattern>
+                        <linearGradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" style="stop-color:#e67e22;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
+                          <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
+                      </ellipse>
+                      <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
+                      <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
+                      <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">SILI</text>
+                      <g transform="translate(285, 90) scale(0.8)">
+                        <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
+                        <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
+                        <polygon points="0,10 20,0 20,20" fill="#1e8449"/>
+                        <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
+                        <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
+                      </g>
+                      <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
+                      <g transform="translate(405, 95) scale(0.7) rotate(15)">
+                        <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
+                        <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
+                        <polygon points="0,15 25,0 25,25" fill="#d35400"/>
+                         <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
+                          <polygon points="40,45 25,25 50,15" fill="#d35400"/>
+                      </g>
+                      <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">ems</text>
+                    </svg>
+            </span>
+            <button onclick="toggleDrawer()" class="close-drawer-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-content">
+            <nav class="drawer-nav">
+                <a href="#" class="drawer-link"><span>01</span> Home</a>
+                <a href="#" class="drawer-link"><span>02</span> Shop</a>
+                <a href="#" class="drawer-link"><span>03</span> Collections</a>
+                <a href="#" class="drawer-link"><span>04</span> Journal</a>
+                <a href="#" class="drawer-link"><span>05</span> Contact</a>
+            </nav>
+            <div class="drawer-search">
+                 <input type="text" placeholder="Search gems...">
+                 <button><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="drawer-footer">
+            <div class="drawer-utils">
+                <a href="#" class="drawer-util-link">My Account</a>
+                <a href="#" class="drawer-util-link">Wishlist</a>
+                <a href="#" class="drawer-util-link">Track Order</a>
+            </div>
+            <div class="drawer-socials">
+                <a href="#" class="drawer-social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW SLIDER HERO SECTION -->
+    <section class="hero-slider">
+        <div class="slides-container">
+            <div class="slide active-slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/11/IMG-20251108-WA0129-scaled.jpg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Asili Means Origin, <br>The Beginning of Real Beauty</h1>
+                    <a href="#products" class="cta-button">Explore The Collection</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Rare. Red. Radiant.<br>The Pigeon's Blood Collection</h1>
+                    <a href="#products" class="cta-button">Discover Ruby</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Image-20c4e2.svg');">
+                <div class="slide-content">
+                    <p class="hero-slogan-top">Asili Gems</p>
+                    <h1 class="hero-title">Timeless Elegance<br>Hand-Crafted in 18k Gold</h1>
+                    <a href="#products" class="cta-button">View Gold Series</a>
+                </div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <span class="dot active-dot" data-slide-index="0"></span>
+            <span class="dot" data-slide-index="1"></span>
+            <span class="dot" data-slide-index="2"></span>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products" class="products-section">
+        <div class="asili-container">
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-bridge">Hand-Selected in Kenya</span>
+                    <h2>Curated Gemstones</h2>
+                    <p>Hand-selected from the source.</p>
+                </div>
+                <a href="#" class="view-all-btn">View All Products</a>
+            </div>
+            <div class="grid-3">
+                <div class="product-card group">
+                    <div class="prod-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1599643478518-17488fbbcd75?q=80&w=1000" alt="Tanzanite" class="prod-img">
+                        <div class="quick-view-trigger desktop-only">
+                            <button class="btn-quick" onclick="openModal(0)">Quick View</button>
+                        </div>
+                    </div>
+                    <span class="prod-cat">Necklaces</span>
+                    <h3 class="prod-name">Tanzanite Royal Pendant</h3>
+                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
+                        <button class="btn-quick" onclick="openModal(0)">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-card group">
+                    <div class="prod-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000" alt="Tsavorite" class="prod-img">
+                        <div class="quick-view-trigger desktop-only">
+                            <button class="btn-quick" onclick="openModal(1)">Quick View</button>
+                        </div>
+                    </div>
+                    <span class="prod-cat">Rings</span>
+                    <h3 class="prod-name">Tsavorite Eternity Ring</h3>
+                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
+                        <button class="btn-quick" onclick="openModal(1)">Quick View</button>
+                    </div>
+                </div>
+                <div class="product-card group">
+                    <div class="prod-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1000" alt="Gold Cuffs" class="prod-img">
+                        <div class="quick-view-trigger desktop-only">
+                            <button class="btn-quick" onclick="openModal(2)">Quick View</button>
+                        </div>
+                    </div>
+                    <span class="prod-cat">Bracelets</span>
+                    <h3 class="prod-name">Serengeti Gold Cuffs</h3>
+                    <div class="mobile-toggle" style="width: 100%; justify-content: center; margin-top: 10px;">
+                        <button class="btn-quick" onclick="openModal(2)">Quick View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFER -->
+    <section class="offer-section">
+        <div class="asili-container">
+            <div class="grid-2">
+                <div class="offer-text">
+                    <h2>Orelia Jewellery <br>Set Limited <br><span class="highlight">Offer</span></h2>
+                    <p>Experience the pinnacle of craftsmanship with our exclusive Orelia collection. Hand-picked stones set in pure 18k gold. Available for a limited time only.</p>
+                    <a href="#" class="btn-outline">Shop The Set</a>
+                </div>
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2670" style="border-radius: 4px;" alt="Gift Box">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section">
+        <div class="asili-container text-center">
+            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="quote">"I was blown away by the quality of the Tanzanite. It's truly a piece of Africa's heart. The packaging was exquisite and delivery was faster than expected."</p>
+            <div class="flex-center" style="flex-direction: column;">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574" class="user-img" alt="User">
+                <p class="text-gold uppercase" style="font-family: var(--f-btn); font-size: 0.9rem; letter-spacing: 1px;">Sarah Jenkins</p>
+                <p style="color: var(--c-text-sub); font-size: 0.8rem;">New York, USA</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER (Replaces Promo Banner) -->
+    <section class="newsletter-section">
+        <div class="asili-container">
+            <h2 class="newsletter-title">Join the Asili Family</h2>
+            <p class="newsletter-desc">Be the first to know about new collections, exclusive events, and the stories behind our ethically sourced gemstones.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
+                <button type="submit" class="btn-subscribe">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="asili-container">
+            <div class="footer-grid">
+                <!-- Left Column -->
+                <div class="footer-col">
+                    <h4>THE BRAND</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Our Craft</a></li>
+                        <li><a href="#">The Source</a></li>
+                        <li><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Middle Column -->
+                <div class="footer-col">
+                    <h4>SHOP</h4>
+                    <ul>
+                        <li><a href="#">The Asili Collection</a></li>
+                        <li><a href="#">Gemstones</a></li>
+                        <li><a href="#">High Jewellery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="footer-col">
+                    <h4>CUSTOMER CARE</h4>
+                    <ul>
+                        <li><a href="#">Shipping and Delivery</a></li>
+                        <li><a href="#">Returns and Exchanges</a></li>
+                        <li><a href="#">Care and Materials</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- NEW: Footer Bottom Row (Socials + Copyright) -->
+            <div class="footer-bottom-row">
+                <!-- Relocated Trust Signals -->
+                <div class="trust-row">
+                    <span>GIA Certified</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Ethically Sourced</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Global Shipping</span>
+                </div>
+
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="copyright">&copy; 2026 Asili Gems. All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- RESPONSIVE MODAL -->
+    <div class="modal-backdrop" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-img-container">
+                <img id="modalImg" src="" alt="Product" class="modal-img">
+            </div>
+            <div class="modal-details">
+                <div class="stars" style="font-size: 0.8rem; margin-bottom: 0.5rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="color: #666; margin-left: 5px;">(5)</span></div>
+                <h2 id="modalTitle" class="prod-name" style="font-size: 2.5rem; line-height: 1.1; text-align: left;"></h2>
+                <div id="modalPrice" class="prod-price" style="font-size: 2rem; margin-bottom: 1.5rem;"></div>
+                <p id="modalDesc" style="color: var(--c-text-sub); margin-bottom: 2rem; line-height: 1.8;">
+                    A rare, ethically sourced Tanzanite set in 18k recycled gold. Hand-hammered texture reflects the raw beauty of the origin.
+                </p>
+                
+                <!-- Desktop Action Layout -->
+                <div class="modal-actions-wrapper">
+                    <div style="display: flex;" class="modal-actions-inner">
+                        <div class="qty-wrapper">
+                            <button class="qty-btn" onclick="updateQty(-1)"><i class="fas fa-minus"></i></button>
+                            <input type="text" value="1" id="qtyInput" class="qty-input" readonly>
+                            <button class="qty-btn" onclick="updateQty(1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-outline" style="flex: 1;">Add to Bag</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; font-size: 0.7rem; color: var(--c-text-sub); text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fas fa-check" style="color: var(--c-extra-1); margin-right: 5px;"></i> In Stock
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic -->
+    <script src="assets/js/products.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
