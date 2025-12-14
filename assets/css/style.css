@@ -630,6 +630,17 @@ footer {
     .hero-slogan-top { font-size: 1rem; margin-bottom: 0.5rem; }
     .hero-subtitle { margin-bottom: 1.5rem; }
     
+    /* Enhanced Mobile Hero Button */
+    .hero-btn {
+        padding: 14px 20px;
+        width: 100%;
+        max-width: 280px; /* Constrain width for aesthetics */
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        display: inline-flex;
+        margin-top: 0.5rem;
+    }
+    
     .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 2.5rem; text-align: left; }
     .section-title h2 { font-size: 2rem; }
     
