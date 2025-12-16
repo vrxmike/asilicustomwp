@@ -72,7 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return `
             <div class="product-card group">
                 <div class="prod-img-wrapper">
-                    <img src="${product.img}" alt="${product.title}" class="prod-img">
+                    <a href="product.html?id=${product.id}">
+                        <img src="${product.img}" alt="${product.title}" class="prod-img">
+                    </a>
                     <!-- Overlay Actions -->
                     <div class="overlay-actions desktop-only">
                         <button class="action-btn" onclick="openModal(${globalIndex})" title="Quick View">
@@ -84,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 <span class="prod-cat">${product.category}</span>
-                <h3 class="prod-name">${product.title}</h3>
+                <h3 class="prod-name"><a href="product.html?id=${product.id}">${product.title}</a></h3>
                 <div class="prod-price">${product.price}</div>
                 <!-- Mobile Actions -->
                 <div class="mobile-actions mobile-only" style="display: none;">
