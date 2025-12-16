@@ -26,15 +26,26 @@
         .header-wrapper:not(.scrolled) .nav-link,
         .header-wrapper:not(.scrolled) .icon-btn,
         .header-wrapper:not(.scrolled) .brand-logo { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header-wrapper:not(.scrolled) .nav-link:hover { color: var(--c-extra-1); }
         .header-wrapper:not(.scrolled) .header-top { background: rgba(10, 20, 15, 0.8); color: rgba(255,255,255,0.8); border-bottom: none; }
         .nav-link { font-family: var(--f-btn); font-weight: 500; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase; padding: 10px 0; }
+        .nav-link:hover { color: var(--c-extra-1); }
         .nav-link::after { background: var(--c-secondary); height: 2px; bottom: 0; }
         @media (max-width: 768px) {
-            .brand-logo svg { fill: white; }
-            .header-wrapper.scrolled .brand-logo svg { fill: var(--c-text-main); }
             .mobile-toggle { color: white; }
             .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
         }
+
+        /* LOGO SWITCHING */
+        .brand-logo img { height: 120px; width: auto; transition: all 0.3s ease; }
+        
+        /* Default (Not Scrolled - Dark/Transparent BG) -> White Logo */
+        .header-wrapper:not(.scrolled) .logo-white { display: block; }
+        .header-wrapper:not(.scrolled) .logo-dark { display: none; }
+
+        /* Scrolled (Light BG) -> Dark Logo */
+        .header-wrapper.scrolled .logo-white { display: none; }
+        .header-wrapper.scrolled .logo-dark { display: block; }
         
         /* NEW HERO SLIDER STYLES (Variant N - Centered & Enhanced) */
         .hero-slider {
@@ -93,7 +104,7 @@
             width: 90%;
             max-width: 500px; /* User requested 500px cap */
             transform: translateX(-50%) translateY(30px); /* Start slightly lower for fade up */
-            z-index: 3;
+            z-index: 20; /* Increased z-index for clickability */
             text-align: center;
             padding: 0;
             opacity: 0;
@@ -109,13 +120,13 @@
         .hero-title {
             font-family: var(--f-hero); /* 'Bodoni Moda' */
             font-weight: 400; /* Regular/Book weight usually looks elegant */
-            color: #FFFFFF; /* Requested white color */
+            color: var(--c-secondary); /* Gold */
             font-size: 24px; /* Requested fixed font size */
             letter-spacing: 0.5px;
             line-height: 1.2;
             text-transform: uppercase; /* "TIMELESS ELEGANCE..." style */
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Enhanced shadow */
         }
 
         .hero-slogan-top {
@@ -135,9 +146,9 @@
             align-items: center;
             justify-content: center;
             padding: 16px 32px;
-            background: transparent; /* Transparent background */
-            color: var(--c-text-on-dark); /* White text */
-            border: 1px solid var(--c-text-on-dark); /* White outline */
+            background: transparent; /* Transparent background by default */
+            color: var(--c-text-on-dark); /* White text by default */
+            border: 1px solid var(--c-text-on-dark); /* White border by default */
             font-family: var(--f-btn); /* 'Outfit' */
             font-weight: 500; /* Medium weight */
             font-size: 0.85rem;
@@ -147,15 +158,15 @@
             transition: all 0.3s ease;
             margin-top: 1rem;
             border-radius: 50px; /* Pill shape */
-            box-shadow: none; /* No shadow */
+            box-shadow: none; /* No shadow by default */
         }
 
         .cta-button:hover {
-            background: var(--c-text-on-dark); /* Solid white on hover */
-            color: var(--c-text-main); /* Black text on hover */
-            border-color: var(--c-text-on-dark); /* White border on hover */
-            transform: translateY(-2px);
-            box-shadow: none; /* No shadow on hover */
+            background: var(--c-extra-1); /* Solid Emerald Green on hover */
+            color: #ffffff; /* White text on hover */
+            border-color: var(--c-extra-1); /* Emerald Green border on hover */
+            transform: translateY(-3px) scale(1.05); /* Lift and slight grow */
+            box-shadow: 0 10px 25px rgba(0, 133, 89, 0.6); /* Stronger Emerald Glow */
         }
 
         /* Slider Navigation Dots */
@@ -258,44 +269,8 @@
                 </div>
                 <!-- LOGO -->
                 <a href="#" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
-                      <defs>
-                        <pattern id="tribalPat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                          <rect width="20" height="20" fill="currentColor"/>
-                          <path d="M0,5 L20,5 M0,10 L20,10 M0,15 L20,15" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
-                          <path d="M5,0 L5,20 M10,0 L10,20 M15,0 L15,20" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
-                          <circle cx="2.5" cy="2.5" r="1.5" fill="#d9534f"/>
-                          <circle cx="12.5" cy="12.5" r="1.5" fill="#5cb85c"/>
-                          <circle cx="17.5" cy="7.5" r="1.5" fill="#f0ad4e"/>
-                        </pattern>
-                        <linearGradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" style="stop-color:#e67e22;stop-opacity:1" />
-                          <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
-                        </linearGradient>
-                      </defs>
-                      <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
-                          <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
-                      </ellipse>
-                      <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
-                      <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
-                      <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">SILI</text>
-                      <g transform="translate(285, 90) scale(0.8)">
-                        <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
-                        <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
-                        <polygon points="0,10 20,0 20,20" fill="#1e8449"/>
-                        <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
-                        <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
-                      </g>
-                      <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="currentColor" stroke-width="2"/>
-                      <g transform="translate(405, 95) scale(0.7) rotate(15)">
-                        <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
-                        <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
-                        <polygon points="0,15 25,0 25,25" fill="#d35400"/>
-                         <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
-                          <polygon points="40,45 25,25 50,15" fill="#d35400"/>
-                      </g>
-                      <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="currentColor" font-weight="bold">ems</text>
-                    </svg>
+                    <img src="Final/Asili Gems Ltd-01.svg" alt="Asili Gems Logo" class="logo-white">
+                    <img src="Final/Asili Gems Ltd-02.svg" alt="Asili Gems Logo" class="logo-dark">
                 </a>
                 <div class="actions-group actions-right">
                     <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
@@ -319,44 +294,7 @@
     <div class="mobile-drawer" id="mobileDrawer">
         <div class="drawer-header">
             <span class="drawer-brand">
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" class="asili-logo-svg" aria-label="Asili Gems Logo">
-                      <defs>
-                        <pattern id="tribalPat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                          <rect width="20" height="20" fill="#1a1a1a"/>
-                          <path d="M0,5 L20,5 M0,10 L20,10 M0,15 L20,15" stroke="#444" stroke-width="1"/>
-                          <path d="M5,0 L5,20 M10,0 L10,20 M15,0 L15,20" stroke="#444" stroke-width="1"/>
-                          <circle cx="2.5" cy="2.5" r="1.5" fill="#d9534f"/>
-                          <circle cx="12.5" cy="12.5" r="1.5" fill="#5cb85c"/>
-                          <circle cx="17.5" cy="7.5" r="1.5" fill="#f0ad4e"/>
-                        </pattern>
-                        <linearGradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" style="stop-color:#e67e22;stop-opacity:1" />
-                          <stop offset="100%" style="stop-color:#f1c40f;stop-opacity:1" />
-                        </linearGradient>
-                      </defs>
-                      <ellipse cx="300" cy="165" rx="250" ry="5" fill="#999" opacity="0.5" filter="url(#blurMe)">
-                          <filter id="blurMe"><feGaussianBlur in="SourceGraphic" stdDeviation="3" /></filter>
-                      </ellipse>
-                      <path d="M 80,140 L 110,40 L 140,40 L 170,140 L 145,140 L 135,110 L 115,110 L 105,140 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
-                      <path d="M 60,125 C 80,115 180,100 200,110 L 190,125 C 170,115 70,130 50,140 Z" fill="url(#brushGrad)"/>
-                      <text x="195" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">SILI</text>
-                      <g transform="translate(285, 90) scale(0.8)">
-                        <polygon points="20,0 40,10 40,30 20,40 0,30 0,10" fill="#2ecc71"/>
-                        <polygon points="20,0 40,10 20,20" fill="#27ae60"/>
-                        <polygon points="0,10 20,0 20,20" fill="#1e8449"/>
-                        <polygon points="0,30 20,40 20,20" fill="#1e8449"/>
-                        <polygon points="40,30 20,40 20,20" fill="#27ae60"/>
-                      </g>
-                      <path d="M 420,60 C 400,40 360,40 340,60 C 320,80 320,120 340,140 C 360,160 400,160 420,140 L 420,110 L 380,110 L 380,130 C 370,135 350,135 345,125 C 340,115 340,95 345,85 C 350,75 370,75 380,80 L 420,60 Z" fill="url(#tribalPat)" stroke="#1a1a1a" stroke-width="2"/>
-                      <g transform="translate(405, 95) scale(0.7) rotate(15)">
-                        <polygon points="25,0 50,15 40,45 10,45 0,15" fill="#f39c12"/>
-                        <polygon points="25,0 50,15 25,25" fill="#e67e22"/>
-                        <polygon points="0,15 25,0 25,25" fill="#d35400"/>
-                         <polygon points="10,45 25,25 0,15" fill="#e67e22"/>
-                          <polygon points="40,45 25,25 50,15" fill="#d35400"/>
-                      </g>
-                      <text x="435" y="140" font-family="'Comic Sans MS', 'Marker Felt', sans-serif" font-size="60" fill="#1a1a1a" font-weight="bold">ems</text>
-                    </svg>
+                 <img src="Final/Asili Gems Ltd (Black).svg" alt="Asili Gems Logo" class="asili-logo-img" style="height: 40px; width: auto;">
             </span>
             <button onclick="toggleDrawer()" class="close-drawer-btn"><i class="fas fa-times"></i></button>
         </div>
@@ -391,24 +329,20 @@
     <!-- NEW SLIDER HERO SECTION (Variant M - No Glass) -->
     <section class="hero-slider">
         <div class="slides-container">
-            <div class="slide active-slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/11/IMG-20251108-WA0129-scaled.jpg');">
+            <div class="slide active-slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">The Asili Collection</p>
                     <h1 class="hero-title">Experience the pinnacle of craftsmanship</h1>
-                    <a href="#products" class="cta-button">Explore The Collection</a>
+                    <a href="#products" class="cta-button">Discover Ruby</a>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/10/WhatsApp-Image-2025-10-24-at-08.12.14.jpeg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">The Asili Collection</p>
                     <h1 class="hero-title">Timeless pieces created for you</h1>
-                    <a href="#products" class="cta-button">Discover Ruby</a>
+                    <a href="#products" class="cta-button">Explore The Collection</a>
                 </div>
             </div>
             <div class="slide" style="background-image: url('https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Image-20c4e2.svg');">
                 <div class="slide-content">
-                    <p class="hero-slogan-top">The Asili Collection</p>
-                    <h1 class="hero-title">Asili Means Origin, <br>The Beginning of Real Beauty</h1>
+                    <h1 class="hero-title">The Asili Collection</h1>
                     <a href="#products" class="cta-button">View Gold Series</a>
                 </div>
             </div>
