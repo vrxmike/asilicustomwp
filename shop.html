@@ -35,6 +35,30 @@
         @media (max-width: 768px) {
             .mobile-toggle { color: white; }
             .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
+            
+            /* Responsive Header Fixes */
+            .mobile-only { display: flex !important; }
+            .desktop-only { display: none !important; }
+            
+            .header-main { padding: 0 10px; height: 60px; }
+            .main-bar-layout { justify-content: space-between; position: relative; }
+            
+            .brand-logo { 
+                position: absolute; 
+                left: 50%; 
+                top: 50%; 
+                transform: translate(-50%, -50%); 
+                margin: 0; 
+                z-index: 1;
+            }
+            .brand-logo img { height: 35px !important; } /* Smaller logo on mobile */
+            
+            .actions-right { gap: 15px; z-index: 2; }
+            .actions-left { z-index: 2; }
+            .icon-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+        }
+        @media (min-width: 769px) {
+            .mobile-only { display: none !important; }
         }
 
         /* LOGO SWITCHING */
@@ -274,8 +298,10 @@
                     <img src="Final/Asili Gems Ltd (Black).svg" alt="Asili Gems Logo" class="logo-dark">
                 </a>
                 <div class="actions-group actions-right">
-                    <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
-                    <button class="icon-btn" aria-label="Account"><i class="fas fa-user"></i></button>
+                    <!-- Search for Mobile -->
+                    <button class="icon-btn mobile-only" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <!-- Account (Hide on very small screens if needed, or keep) -->
+                    <button class="icon-btn desktop-only" aria-label="Account"><i class="fas fa-user"></i></button> 
                     <button class="icon-btn" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="bag-count">2</span></button>
                 </div>
             </div>
