@@ -1,0 +1,393 @@
+/* ========================================= */
+/* ASILI GEMS - SHOP PAGE STYLES             */
+/* ========================================= */
+
+.shop-page-wrapper {
+    /* Removed padding-top here because we will have a hero section now */
+    padding-bottom: 4rem;
+    background-color: var(--c-bg-page);
+    min-height: 100vh;
+}
+
+/* SHOP HERO SECTION */
+.shop-hero {
+    position: relative;
+    height: 50vh;
+    min-height: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://images.unsplash.com/photo-1599643478518-17488fbbcd75?q=80&w=2000'); /* Tanzanite/Gemstone BG */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    margin-bottom: 0; /* Flush with content below or slight gap */
+}
+
+.shop-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5); /* Dark overlay for text readability */
+}
+
+.shop-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+    /* Sticky Effect */
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.shop-hero-title {
+    font-family: var(--f-hero); /* Bodoni Moda */
+    font-size: clamp(3rem, 6vw, 5rem);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #295E03; /* New headline color */
+    text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    margin: 0;
+}
+
+/* HEADER & TOOLBAR */
+.shop-header {
+    margin: 3rem 0; /* Spacing below hero */
+}
+
+.breadcrumbs {
+    font-family: var(--f-ui);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--c-text-sub);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+.breadcrumbs a:hover { color: var(--c-secondary); }
+.breadcrumbs .current { color: var(--c-text-main); font-weight: 600; }
+
+.page-title {
+    font-family: var(--f-hero);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--c-text-main);
+    margin-bottom: 2rem;
+    font-weight: 400;
+    display: none; /* Hide standard page title since we have hero now */
+}
+
+.shop-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 1rem 0;
+}
+
+.results-count {
+    font-family: var(--f-ui);
+    font-size: 0.85rem;
+    color: var(--c-text-sub);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-wrapper label {
+    font-family: var(--f-ui);
+    font-size: 0.85rem;
+    color: var(--c-text-sub);
+}
+
+#sortSelect {
+    border: none;
+    background: transparent;
+    font-family: var(--f-ui);
+    font-size: 0.85rem;
+    color: var(--c-text-main);
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+/* LAYOUT: SIDEBAR + GRID */
+.shop-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+/* SIDEBAR */
+.shop-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.filter-group h3 {
+    font-family: var(--f-heading);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--c-text-main);
+    font-weight: 500;
+}
+
+.filter-list li {
+    margin-bottom: 0.8rem;
+}
+
+.filter-btn {
+    font-family: var(--f-ui);
+    font-size: 0.9rem;
+    color: var(--c-text-sub);
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+    width: 100%;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    color: var(--c-primary);
+    font-weight: 600;
+    transform: translateX(5px);
+}
+
+/* PRICE SLIDER */
+.price-slider-wrapper {
+    padding: 0 5px;
+}
+#priceRange {
+    width: 100%;
+    accent-color: var(--c-primary);
+    cursor: pointer;
+}
+.price-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    color: var(--c-text-sub);
+}
+
+/* PRODUCT GRID */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* No Results Message */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem;
+    color: var(--c-text-sub);
+    font-family: var(--f-body);
+}
+
+/* ========================================= */
+/* FAQ SECTION STYLES                        */
+/* ========================================= */
+
+.faq-section { 
+    padding: 6rem 0; 
+    background: var(--c-bg-card); 
+    border-top: 1px solid rgba(0,0,0,0.05); 
+}
+
+.faq-container { 
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+.faq-title { 
+    text-align: center; 
+    margin-bottom: 3rem; 
+    font-family: var(--f-hero); 
+    font-size: clamp(2rem, 3vw, 2.5rem); 
+    color: var(--c-text-main);
+}
+
+/* Accordion Item Styling */
+.faq-item { 
+    border-bottom: 1px solid rgba(0,0,0,0.08); 
+}
+
+.faq-item:first-child { 
+    border-top: 1px solid rgba(0,0,0,0.08); 
+}
+
+/* The clickable question header */
+details > summary {
+    list-style: none;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    font-family: var(--f-heading);
+    font-size: 1.1rem;
+    color: var(--c-text-main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+/* Remove default triangle on Webkit browsers */
+details > summary::-webkit-details-marker { 
+    display: none; 
+}
+
+details > summary:hover { 
+    color: var(--c-primary); 
+}
+
+/* Custom '+' Icon */
+details > summary::after {
+    content: '+';
+    font-family: var(--f-mono);
+    font-size: 1.2rem;
+    color: var(--c-secondary);
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+/* Rotate icon when open */
+details[open] > summary::after { 
+    transform: rotate(45deg); 
+}
+
+details[open] > summary { 
+    color: var(--c-primary); 
+}
+
+/* Expanding Answer */
+.faq-answer {
+    padding-bottom: 1.5rem;
+    color: var(--c-text-sub);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    animation: fadeIn 0.4s ease;
+}
+
+ @keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(-5px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* ========================================= */
+/* PRODUCT CARD ENHANCEMENTS                 */
+/* ========================================= */
+
+.product-card {
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Added rounded borders */
+    background: var(--c-bg-card); /* Ensure it has a background */
+    overflow: hidden; /* Important for border-radius to clip content */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1); /* General hover shadow for card */
+}
+
+.prod-img-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #e0e0e0; /* Fallback background for missing images */
+    border-radius: 4px; /* Slight rounding for image wrapper */
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-soft); /* Initial shadow for image wrapper */
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover .prod-img-wrapper {
+    box-shadow: var(--shadow-hover); /* Enhanced shadow on hover */
+}
+
+.prod-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease, opacity 0.5s;
+}
+
+/* OVERLAY ACTIONS (Desktop) */
+.overlay-actions {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.product-card:hover .overlay-actions {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    color: var(--c-text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    background: var(--c-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* MOBILE HANDLING */
+@media (max-width: 768px) {
+    .overlay-actions { display: none !important; }
+    .mobile-actions { display: flex !important; width: 100%; justify-content: center; margin-top: 10px; }
+    .mobile-only { display: block; }
+}
+@media (min-width: 769px) {
+    .mobile-only { display: none; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .shop-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .shop-layout { grid-template-columns: 1fr; }
+    .shop-sidebar { 
+        display: none; /* In a real app, this would be a drawer or accordion */
+    }
+    /* Simple mobile filter handling for prototype: Stack filters on top */
+    .shop-layout { display: block; }
+    .shop-sidebar { display: flex; flex-direction: row; overflow-x: auto; padding-bottom: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .filter-group { min-width: 150px; }
+    
+    .shop-grid { grid-template-columns: 1fr; }
+}
