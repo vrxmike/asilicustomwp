@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Asili Gems - Slider Test</title>
+    
+    <!-- FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:opsz,wght@9..144,300..900&family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CUSTOM STYLES -->
+    <link rel="stylesheet" href="assets/css/palette.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/shop.css">
+    
+    <!-- VARIANT L OVERRIDES -->
+    <style>
+        :root {
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        .header-wrapper { transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease; }
+        .header-wrapper:not(.scrolled) .nav-link,
+        .header-wrapper:not(.scrolled) .icon-btn,
+        .header-wrapper:not(.scrolled) .brand-logo { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header-wrapper:not(.scrolled) .nav-link:hover { color: var(--c-extra-1); }
+        .header-wrapper:not(.scrolled) .header-top { background: rgba(10, 20, 15, 0.8); color: rgba(255,255,255,0.8); border-bottom: none; }
+        .nav-link { font-family: var(--f-btn); font-weight: 900; letter-spacing: 2px; font-size: 14px; text-transform: uppercase; padding: 10px 0; }
+        .nav-link:hover { color: var(--c-extra-1); }
+        .nav-link::after { background: var(--c-secondary); height: 2px; bottom: 0; }
+        @media (max-width: 768px) {
+            .mobile-toggle { color: white; }
+            .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
+        }
+
+        /* LOGO SWITCHING */
+        .brand-logo img { height: 120px; width: auto; transition: all 0.3s ease; }
+        
+        /* Default (Not Scrolled - Dark/Transparent BG) -> White Logo */
+        .header-wrapper:not(.scrolled) .logo-white { display: block; }
+        .header-wrapper:not(.scrolled) .logo-dark { display: none; }
+
+        /* Scrolled (Light BG) -> Dark Logo */
+        .header-wrapper.scrolled .logo-white { display: none; }
+        .header-wrapper.scrolled .logo-dark { display: block; }
+        
+        /* NEW HERO SLIDER STYLES (Variant N - Centered & Enhanced) */
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 0; /* Removing padding-top as we are positioning absolutely */
+        }
+
+        .slides-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+            transform: scale(1.05);
+            z-index: 1;
+        }
+
+        .slide.active-slide {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.3) 0%, 
+                rgba(0,0,0,0.1) 50%, 
+                rgba(0,0,0,0.4) 100%);
+            z-index: 1;
+        }
+
+        /* Slide Content - Structurally Centered & Positioned */
+        .slide-content {
+            position: absolute;
+            left: 50%;
+            bottom: 80px; /* Requested vertical change */
+            width: 90%;
+            max-width: 500px; /* User requested 500px cap */
+            transform: translateX(-50%) translateY(30px); /* Start slightly lower for fade up */
+            z-index: 20; /* Increased z-index for clickability */
+            text-align: center;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.2, 1, 0.3, 1) 0.5s;
+        }
+
+        .active-slide .slide-content {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0); /* Final centered position */
+        }
+
+        /* Typography - Hierarchy & specific fonts */
+        .hero-title {
+            font-family: var(--f-hero); /* 'Bodoni Moda' */
+            font-weight: 400; /* Regular/Book weight usually looks elegant */
+            color: var(--c-secondary); /* Gold */
+            font-size: 24px; /* Requested fixed font size */
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            text-transform: uppercase; /* "TIMELESS ELEGANCE..." style */
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Enhanced shadow */
+        }
+
+        .hero-slogan-top {
+            font-family: var(--f-body); /* 'Lora' */
+            font-size: 14px; /* Requested size */
+            color: #FFFFFF; /* Requested white color */
+            font-style: normal;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            text-transform: uppercase; /* Matching the sophisticated feel */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* CTA Button - Enhanced */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background: transparent; /* Transparent background by default */
+            color: var(--c-text-on-dark); /* White text by default */
+            border: 1px solid var(--c-text-on-dark); /* White border by default */
+            font-family: var(--f-btn); /* 'Outfit' */
+            font-weight: 500; /* Medium weight */
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            border-radius: 50px; /* Pill shape */
+            box-shadow: none; /* No shadow by default */
+        }
+
+        .cta-button:hover {
+            background: var(--c-extra-1); /* Solid Emerald Green on hover */
+            color: #ffffff; /* White text on hover */
+            border-color: var(--c-extra-1); /* Emerald Green border on hover */
+            transform: translateY(-3px) scale(1.05); /* Lift and slight grow */
+            box-shadow: 0 10px 25px rgba(0, 133, 89, 0.6); /* Stronger Emerald Glow */
+        }
+
+        /* Slider Navigation Dots */
+        .slider-nav {
+            position: absolute;
+            bottom: 20px; /* Fixed pixel value for consistent spacing from bottom */
+            left: 20px; /* Left aligned */
+            transform: none; /* Remove horizontal centering */
+            z-index: 10;
+            display: flex;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .dot:hover { background: rgba(255,255,255,0.3); }
+
+        .dot.active-dot {
+            background: #ffffff;
+            border-color: #ffffff;
+            transform: scale(1.2);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero-slider {
+                padding-top: 0;
+            }
+            .slide-content {
+                width: 90%;
+                max-width: none;
+                bottom: 80px; /* Consistent with desktop */
+            }
+            .hero-title {
+                font-size: 20px; /* Slightly smaller fixed size for mobile */
+                color: #FFFFFF; /* Consistent with desktop */
+            }
+            .hero-slogan-top {
+                font-size: 12px; /* Slightly smaller fixed size for mobile */
+                color: #FFFFFF; /* Consistent with desktop */
+            }
+            .slider-nav {
+                left: 20px; /* Left aligned for mobile */
+                transform: none; /* Remove centering transform for mobile */
+                bottom: 15px; /* Fixed bottom position for mobile */
+            /* Full Width / Touch-Friendly Button */
+            .cta-button {
+                width: 100%;
+                max-width: 250px; /* Adjusted max-width */
+                padding: 10px 15px; /* Reduced padding */
+                font-size: 0.6rem; /* Reduced font size */
+                letter-spacing: 1.2px; /* Reduced letter spacing */
+                margin-top: 0.8rem;
+                justify-content: center;
+                /* Secondary Outline Button properties for mobile */
+                background: transparent;
+                color: var(--c-text-on-dark);
+                border: 1px solid var(--c-text-on-dark);
+                border-radius: 50px;
+                box-shadow: none;
+            }
+            .cta-button:hover {
+                background: var(--c-text-on-dark);
+                color: var(--c-text-main);
+                border-color: var(--c-text-on-dark);
+                box-shadow: none;
+            }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header-wrapper" id="mainHeader">
+        <div class="header-top">
+            <div class="asili-container flex-between">
+                <span style="font-size: 10px; letter-spacing: 1px;">Ethical Sourcing • Global Shipping</span>
+                <div class="utility-links">
+                    <a href="#">Concierge</a>
+                    <a href="#">Boutiques</a>
+                    <a href="#">Account</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="asili-container main-bar-layout">
+                <div class="actions-group actions-left">
+                    <button class="mobile-toggle" onclick="toggleDrawer()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Wishlist"><i class="far fa-heart"></i></button>
+                </div>
+                <!-- LOGO -->
+                <a href="#" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
+                    <img src="Final/Asili Gems Ltd (White).svg" alt="Asili Gems Logo" class="logo-white">
+                    <img src="Final/Asili Gems Ltd (Black).svg" alt="Asili Gems Logo" class="logo-dark">
+                </a>
+                <div class="actions-group actions-right">
+                    <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn" aria-label="Account"><i class="fas fa-user"></i></button>
+                    <button class="icon-btn" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="bag-count">2</span></button>
+                </div>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">Collections</a></li>
+                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <span class="drawer-brand">
+                 <img src="Final/Asili Gems Ltd (Black).svg" alt="Asili Gems Logo" class="asili-logo-img" style="height: 40px; width: auto;">
+            </span>
+            <button onclick="toggleDrawer()" class="close-drawer-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-content">
+            <nav class="drawer-nav">
+                <a href="#" class="drawer-link"><span>01</span> Home</a>
+                <a href="#" class="drawer-link"><span>02</span> Shop</a>
+                <a href="#" class="drawer-link"><span>03</span> Collections</a>
+                <a href="#" class="drawer-link"><span>04</span> Journal</a>
+                <a href="#" class="drawer-link"><span>05</span> Contact</a>
+            </nav>
+            <div class="drawer-search">
+                 <input type="text" placeholder="Search gems...">
+                 <button><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="drawer-footer">
+            <div class="drawer-utils">
+                <a href="#" class="drawer-util-link">My Account</a>
+                <a href="#" class="drawer-util-link">Wishlist</a>
+                <a href="#" class="drawer-util-link">Track Order</a>
+            </div>
+            <div class="drawer-socials">
+                <a href="#" class="drawer-social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOP MAIN CONTENT -->
+    <main class="shop-page-wrapper">
+        <!-- CUSTOM HERO SECTION -->
+        <section class="shop-hero">
+            <div class="shop-hero-content">
+                <h1 class="shop-hero-title">OUR GEMSTONES</h1>
+            </div>
+        </section>
+
+        <div class="asili-container">
+            <!-- Breadcrumb & Header -->
+            <div class="shop-header">
+                <div class="breadcrumbs">
+                    <a href="index.html">Home</a> / <span class="current">Shop</span>
+                </div>
+                <h1 class="page-title">The Collection</h1>
+                <div class="shop-toolbar">
+                    <div class="results-count"><span id="prodCount">0</span> Products</div>
+                    <div class="sort-wrapper">
+                        <label for="sortSelect">Sort By:</label>
+                        <select id="sortSelect">
+                            <option value="featured">Featured</option>
+                            <option value="newest">Newest</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shop-layout">
+                <!-- SIDEBAR FILTERS -->
+                <aside class="shop-sidebar">
+                    <div class="filter-group">
+                        <h3>Category</h3>
+                        <ul class="filter-list" id="catFilters">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Gemstone</h3>
+                        <ul class="filter-list" id="gemFilters">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <h3>Price Range</h3>
+                        <div class="price-slider-wrapper">
+                            <input type="range" min="0" max="10000" step="100" id="priceRange">
+                            <div class="price-labels">
+                                <span>$0</span>
+                                <span id="priceValue">$10,000+</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- PRODUCT GRID -->
+                <div class="shop-grid" id="productGrid">
+                    <!-- Products rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <h2 class="faq-title">Client Care & Inquiries</h2>
+                
+                <!-- Question 1 -->
+                <details class="faq-item">
+                    <summary>Do you offer international shipping?</summary>
+                    <div class="faq-answer">
+                        Yes, Asili Gems ships globally. All international shipments are fully insured and sent via secure courier (DHL or FedEx). Shipping times vary by location but typically range from 3-7 business days for major cities.
+                    </div>
+                </details>
+
+                <!-- Question 2 -->
+                <details class="faq-item">
+                    <summary>Are your gemstones certified?</summary>
+                    <div class="faq-answer">
+                        Absolutely. Every gemstone over 1.0 carat comes with a certificate of authenticity. For our premium Tanzanite and Tsavorite collections, we provide full GIA or GRS certification detailing origin, treatment status, and grade.
+                    </div>
+                </details>
+
+                <!-- Question 3 -->
+                <details class="faq-item">
+                    <summary>What is your return policy?</summary>
+                    <div class="faq-answer">
+                        We offer a 14-day return policy for all unworn items in their original condition. Because we deal in high-value custom pieces, please contact our concierge team immediately if you wish to initiate a return. Custom-commissioned pieces are final sale.
+                    </div>
+                </details>
+
+                <!-- Question 4 -->
+                <details class="faq-item">
+                    <summary>Can I customize a design?</summary>
+                    <div class="faq-answer">
+                        Bespoke design is at the heart of Asili. If you see a stone you love but prefer a different setting, or if you wish to source a specific gem, our "Concierge" team works directly with you to sketch and craft your unique piece.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="asili-container">
+            <div class="footer-grid">
+                <!-- Left Column -->
+                <div class="footer-col">
+                    <h4>THE BRAND</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Our Craft</a></li>
+                        <li><a href="#">The Source</a></li>
+                        <li><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Middle Column -->
+                <div class="footer-col">
+                    <h4>SHOP</h4>
+                    <ul>
+                        <li><a href="#">The Asili Collection</a></li>
+                        <li><a href="#">Gemstones</a></li>
+                        <li><a href="#">High Jewellery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="footer-col">
+                    <h4>CUSTOMER CARE</h4>
+                    <ul>
+                        <li><a href="#">Shipping and Delivery</a></li>
+                        <li><a href="#">Returns and Exchanges</a></li>
+                        <li><a href="#">Care and Materials</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- NEW: Footer Bottom Row (Socials + Copyright) -->
+            <div class="footer-bottom-row">
+                <!-- Relocated Trust Signals -->
+                <div class="trust-row">
+                    <span>GIA Certified</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Ethically Sourced</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Global Shipping</span>
+                </div>
+
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="copyright">&copy; 2026 Asili Gems. All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- RESPONSIVE MODAL -->
+    <div class="modal-backdrop" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-img-container">
+                <img id="modalImg" src="" alt="Product" class="modal-img">
+            </div>
+            <div class="modal-details">
+                <div class="stars" style="font-size: 0.8rem; margin-bottom: 0.5rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="color: #666; margin-left: 5px;">(5)</span></div>
+                <h2 id="modalTitle" class="prod-name" style="font-size: 2.5rem; line-height: 1.1; text-align: left;"></h2>
+                <div id="modalPrice" class="prod-price" style="font-size: 2rem; margin-bottom: 1.5rem;"></div>
+                <p id="modalDesc" style="color: var(--c-text-sub); margin-bottom: 2rem; line-height: 1.8;">
+                    A rare, ethically sourced Tanzanite set in 18k recycled gold. Hand-hammered texture reflects the raw beauty of the origin.
+                </p>
+                
+                <!-- Desktop Action Layout -->
+                <div class="modal-actions-wrapper">
+                    <div style="display: flex;" class="modal-actions-inner">
+                        <div class="qty-wrapper">
+                            <button class="qty-btn" onclick="updateQty(-1)"><i class="fas fa-minus"></i></button>
+                            <input type="text" value="1" id="qtyInput" class="qty-input" readonly>
+                            <button class="qty-btn" onclick="updateQty(1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-outline" style="flex: 1;">Add to Bag</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; font-size: 0.7rem; color: var(--c-text-sub); text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fas fa-check" style="color: var(--c-extra-1); margin-right: 5px;"></i> In Stock
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic -->
+    <script src="assets/js/products.js" defer></script>
+    <script src="assets/js/shop.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
