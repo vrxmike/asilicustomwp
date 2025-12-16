@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="assets/css/palette.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/shop.css">
+    <link rel="stylesheet" href="assets/css/product.css">
     
     <!-- VARIANT L OVERRIDES -->
     <style>
@@ -380,108 +381,78 @@
         </div>
     </div>
 
-    <!-- SHOP MAIN CONTENT -->
-    <main class="shop-page-wrapper">
-        <!-- CUSTOM HERO SECTION -->
-        <section class="shop-hero">
-            <div class="shop-hero-content">
-                <h1 class="shop-hero-title">OUR GEMSTONES</h1>
-            </div>
-        </section>
-
+    <!-- PRODUCT MAIN CONTENT -->
+    <main class="product-page-wrapper">
         <div class="asili-container">
-            <!-- Breadcrumb & Header -->
-            <div class="shop-header">
-                <div class="breadcrumbs">
-                    <a href="index.html">Home</a> / <span class="current">Shop</span>
-                </div>
-                <h1 class="page-title">The Collection</h1>
-                <div class="shop-toolbar">
-                    <div class="results-count"><span id="prodCount">0</span> Products</div>
-                    <div class="sort-wrapper">
-                        <label for="sortSelect">Sort By:</label>
-                        <select id="sortSelect">
-                            <option value="featured">Featured</option>
-                            <option value="newest">Newest</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                        </select>
+            <div class="product-detail-layout">
+                <!-- LEFT: GALLERY -->
+                <div class="product-gallery">
+                    <div class="main-image-wrapper">
+                        <img id="mainImage" src="" alt="Loading..." class="main-image">
+                    </div>
+                    <div class="thumbnail-strip">
+                        <!-- Thumbnails will be injected by JS or mock -->
+                        <div class="thumb active"><img id="thumb1" src="" alt=""></div>
+                        <div class="thumb"><img id="thumb2" src="" alt=""></div>
+                        <div class="thumb"><img id="thumb3" src="" alt=""></div>
                     </div>
                 </div>
-            </div>
 
-            <div class="shop-layout">
-                <!-- SIDEBAR FILTERS -->
-                <aside class="shop-sidebar">
-                    <div class="filter-group">
-                        <h3>Category</h3>
-                        <ul class="filter-list" id="catFilters">
-                            <!-- Populated by JS -->
-                        </ul>
+                <!-- RIGHT: INFO -->
+                <div class="product-info-col">
+                    <div class="breadcrumbs" id="prodBreadcrumbs">
+                        <a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span class="current">Loading...</span>
                     </div>
-                    <div class="filter-group">
-                        <h3>Gemstone</h3>
-                        <ul class="filter-list" id="gemFilters">
-                            <!-- Populated by JS -->
-                        </ul>
+                    
+                    <h1 class="product-title-large" id="prodTitle">Loading Product...</h1>
+                    <div class="product-price-large" id="prodPrice">...</div>
+                    
+                    <div class="product-short-desc" id="prodDesc">
+                        Loading description...
                     </div>
-                    <div class="filter-group">
-                        <h3>Price Range</h3>
-                        <div class="price-slider-wrapper">
-                            <input type="range" min="0" max="10000" step="100" id="priceRange">
-                            <div class="price-labels">
-                                <span>$0</span>
-                                <span id="priceValue">$10,000+</span>
-                            </div>
+
+                    <div class="product-specs-table">
+                        <div class="spec-row">
+                            <span class="spec-label">Gemstone:</span>
+                            <span class="spec-value" id="specGem">...</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Category:</span>
+                            <span class="spec-value" id="specCat">...</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Availability:</span>
+                            <span class="spec-value text-green">In Stock</span>
                         </div>
                     </div>
-                </aside>
 
-                <!-- PRODUCT GRID -->
-                <div class="shop-grid" id="productGrid">
-                    <!-- Products rendered here -->
+                    <div class="product-purchase-actions">
+                        <div class="qty-selector">
+                            <button class="qty-btn" onclick="updatePageQty(-1)"><i class="fas fa-minus"></i></button>
+                            <input type="text" value="1" id="pageQtyInput" readonly>
+                            <button class="qty-btn" onclick="updatePageQty(1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-primary full-width-btn" id="addToCartBtn">Add to Bag</button>
+                    </div>
+                    
+                    <div class="product-trust-row">
+                        <div class="trust-item"><i class="fas fa-truck"></i> <span>Free Global Shipping</span></div>
+                        <div class="trust-item"><i class="fas fa-certificate"></i> <span>Authenticity Guaranteed</span></div>
+                        <div class="trust-item"><i class="fas fa-undo"></i> <span>14-Day Returns</span></div>
+                    </div>
                 </div>
             </div>
+            
+            <!-- RELATED PRODUCTS -->
+            <section class="related-products-section">
+                <div class="section-header text-center">
+                    <h2>You May Also Like</h2>
+                </div>
+                <div class="shop-grid" id="relatedGrid">
+                    <!-- JS will populate -->
+                </div>
+            </section>
         </div>
-
-        <!-- FAQ SECTION -->
-        <section class="faq-section">
-            <div class="faq-container">
-                <h2 class="faq-title">Client Care & Inquiries</h2>
-                
-                <!-- Question 1 -->
-                <details class="faq-item">
-                    <summary>Do you offer international shipping?</summary>
-                    <div class="faq-answer">
-                        Yes, Asili Gems ships globally. All international shipments are fully insured and sent via secure courier (DHL or FedEx). Shipping times vary by location but typically range from 3-7 business days for major cities.
-                    </div>
-                </details>
-
-                <!-- Question 2 -->
-                <details class="faq-item">
-                    <summary>Are your gemstones certified?</summary>
-                    <div class="faq-answer">
-                        Absolutely. Every gemstone over 1.0 carat comes with a certificate of authenticity. For our premium Tanzanite and Tsavorite collections, we provide full GIA or GRS certification detailing origin, treatment status, and grade.
-                    </div>
-                </details>
-
-                <!-- Question 3 -->
-                <details class="faq-item">
-                    <summary>What is your return policy?</summary>
-                    <div class="faq-answer">
-                        We offer a 14-day return policy for all unworn items in their original condition. Because we deal in high-value custom pieces, please contact our concierge team immediately if you wish to initiate a return. Custom-commissioned pieces are final sale.
-                    </div>
-                </details>
-
-                <!-- Question 4 -->
-                <details class="faq-item">
-                    <summary>Can I customize a design?</summary>
-                    <div class="faq-answer">
-                        Bespoke design is at the heart of Asili. If you see a stone you love but prefer a different setting, or if you wish to source a specific gem, our "Concierge" team works directly with you to sketch and craft your unique piece.
-                    </div>
-                </details>
-            </div>
-        </section>
     </main>
 
     <!-- FOOTER -->
@@ -580,7 +551,7 @@
 
     <!-- JS Logic -->
     <script src="assets/js/products.js" defer></script>
-    <script src="assets/js/shop.js" defer></script>
+    <script src="assets/js/product-detail.js" defer></script>
     <script src="assets/js/app.js" defer></script>
 </body>
 </html>
