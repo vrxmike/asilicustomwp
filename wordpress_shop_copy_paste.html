@@ -656,8 +656,10 @@
 </div>
 
 <script>
-    // 6. PRODUCTS.JS (WITH WOOCOMMERCE IDs)
-    const products = [
+(function() { // Start IIFE
+
+    // 6. PRODUCTS.JS (Renamed to asiliProducts to avoid conflicts)
+    const asiliProducts = [
         {
             id: 1,
             woo_id: 111, // REPLACE WITH REAL ID
@@ -805,8 +807,8 @@
         }
     });
 
-    // Mobile Drawer Logic
-    function toggleDrawer() {
+    // Make toggleDrawer global so the onclick="toggleDrawer()" works
+    window.toggleDrawer = function() {
         const drawer = document.getElementById('mobileDrawer');
         if (drawer) {
             drawer.classList.toggle('active');
@@ -827,10 +829,11 @@
     const qtyInput = document.getElementById('qtyInput');
     const modalAddToCart = document.getElementById('modalAddToCart');
 
-    function openModal(index) {
-        if (typeof products === 'undefined' || !modal) return;
+    // Make openModal global
+    window.openModal = function(index) {
+        if (typeof asiliProducts === 'undefined' || !modal) return;
         
-        const product = products[index];
+        const product = asiliProducts[index];
         modalImg.src = product.img;
         modalTitle.innerText = product.title;
         modalPrice.innerText = product.price;
@@ -854,7 +857,8 @@
         }
     }
 
-    function closeModal() {
+    // Make closeModal global
+    window.closeModal = function() {
         if (modal) {
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
@@ -871,7 +875,8 @@
         });
     }
 
-    function updateQty(change) {
+    // Make updateQty global
+    window.updateQty = function(change) {
         if (!qtyInput) return;
         let val = parseInt(qtyInput.value);
         val += change;
@@ -919,7 +924,7 @@
         // --- RENDERING ---
         function renderFilters() {
             // Categories
-            const categories = ['all', ...new Set(products.map(p => p.category))];
+            const categories = ['all', ...new Set(asiliProducts.map(p => p.category))];
             catList.innerHTML = categories.map(cat => `
                 <li>
                     <button class="filter-btn ${cat === activeCategory ? 'active' : ''}" 
@@ -930,7 +935,7 @@
             `).join('');
 
             // Gemstones
-            const gemstones = ['all', ...new Set(products.map(p => p.gemstone))];
+            const gemstones = ['all', ...new Set(asiliProducts.map(p => p.gemstone))];
             gemList.innerHTML = gemstones.map(gem => `
                 <li>
                     <button class="filter-btn ${gem === activeGemstone ? 'active' : ''}" 
@@ -950,7 +955,7 @@
 
             countLabel.textContent = data.length;
             grid.innerHTML = data.map((product, index) => {
-                const globalIndex = products.findIndex(p => p.id === product.id);
+                const globalIndex = asiliProducts.findIndex(p => p.id === product.id);
                 // WOOCOMMERCE ADD TO CART LINK
                 const addToCartLink = `?add-to-cart=${product.woo_id}`;
                 
@@ -983,6 +988,7 @@
         }
 
         // --- LOGIC ---
+        // Make filters global so they can be called from onclick
         window.setCategory = (cat) => {
             activeCategory = cat;
             renderFilters(); // Re-render to update active class
@@ -996,7 +1002,7 @@
         };
 
         function applyFilters() {
-            let filtered = products.filter(p => {
+            let filtered = asiliProducts.filter(p => {
                 const matchCat = activeCategory === 'all' || p.category === activeCategory;
                 const matchGem = activeGemstone === 'all' || p.gemstone === activeGemstone;
                 const matchPrice = p.priceValue <= maxPrice;
@@ -1023,4 +1029,6 @@
 
         init();
     });
+
+})(); // End IIFE
 </script>
