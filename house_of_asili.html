@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>The House of Asili - Origin & Ethics</title>
+    
+    <!-- FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:opsz,wght@9..144,300..900&family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CUSTOM STYLES -->
+    <link rel="stylesheet" href="assets/css/palette.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* REUSING STYLES FROM VARIANT P */
+        :root {
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        .header-wrapper { transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease; }
+        .header-wrapper:not(.scrolled) .nav-link,
+        .header-wrapper:not(.scrolled) .icon-btn,
+        .header-wrapper:not(.scrolled) .brand-logo { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .header-wrapper:not(.scrolled) .nav-link:hover { color: var(--c-extra-1); }
+        .header-wrapper:not(.scrolled) .header-top { background: rgba(10, 20, 15, 0.8); color: rgba(255,255,255,0.8); border-bottom: none; }
+        .nav-link { font-family: var(--f-btn); font-weight: 900; letter-spacing: 2px; font-size: 14px; text-transform: uppercase; padding: 10px 0; }
+        .nav-link:hover { color: var(--c-extra-1); }
+        .nav-link::after { background: var(--c-secondary); height: 2px; bottom: 0; }
+        
+        /* LOGO SWITCHING */
+        .brand-logo img { height: 120px; width: auto; transition: all 0.3s ease; }
+        .header-wrapper:not(.scrolled) .logo-white { display: block; }
+        .header-wrapper:not(.scrolled) .logo-dark { display: none; }
+        .header-wrapper.scrolled .logo-white { display: none; }
+        .header-wrapper.scrolled .logo-dark { display: block; }
+
+        @media (max-width: 768px) {
+            .mobile-toggle { color: white; }
+            .header-wrapper.scrolled .mobile-toggle { color: var(--c-text-main); }
+        }
+
+        /* PAGE SPECIFIC STYLES */
+        .about-hero {
+            height: 60vh;
+            min-height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1616428383837-7813df313b3d?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10,20,15,0.3), rgba(10,20,15,0.6));
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: var(--f-hero);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            padding: clamp(4rem, 8vw, 6rem) 0;
+            background: var(--c-bg-page);
+        }
+
+        .text-block {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .text-block h2 {
+            font-family: var(--f-heading);
+            font-size: 2.5rem;
+            color: var(--c-text-main);
+            margin-bottom: 1.5rem;
+        }
+
+        .text-block p {
+            font-family: var(--f-body);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--c-text-sub);
+            margin-bottom: 1.5rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: var(--c-bg-card);
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: var(--shadow-soft);
+            transition: 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            color: var(--c-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .value-card h3 {
+            font-family: var(--f-heading);
+            margin-bottom: 1rem;
+            color: var(--c-text-main);
+        }
+
+        .value-card p {
+            color: var(--c-text-sub);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* JOURNEY SECTION */
+        .journey-section {
+            background: var(--c-bg-dark);
+            color: var(--c-text-on-dark);
+            padding: 6rem 0;
+        }
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .journey-img {
+            width: 100%;
+            border-radius: 4px;
+            opacity: 0.9;
+        }
+
+        .journey-text h3 {
+            font-family: var(--f-heading);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        
+        .journey-text p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .values-grid { grid-template-columns: 1fr; }
+            .journey-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .journey-grid .journey-img { order: -1; } /* Image first on mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER (Copied from index_variant_p.html) -->
+    <header class="header-wrapper" id="mainHeader">
+        <div class="header-top">
+            <div class="asili-container flex-between">
+                <span style="font-size: 10px; letter-spacing: 1px;">Ethical Sourcing • Global Shipping</span>
+                <div class="utility-links">
+                    <a href="#">Concierge</a>
+                    <a href="#">Boutiques</a>
+                    <a href="#">Account</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="asili-container main-bar-layout">
+                <div class="actions-group actions-left">
+                    <button class="mobile-toggle" onclick="toggleDrawer()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn desktop-only" aria-label="Wishlist"><i class="far fa-heart"></i></button>
+                </div>
+                <!-- LOGO -->
+                <a href="index.html" class="brand-logo" id="brandLogo" aria-label="Asili Gems Home">
+                    <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Asili-Gems-Ltd-01-34eee5.svg" alt="Asili Gems Logo" class="logo-white">
+                    <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Asili-Gems-Ltd-Black-b3c9e8.svg" alt="Asili Gems Logo" class="logo-dark">
+                </a>
+                <div class="actions-group actions-right">
+                    <button class="mobile-toggle" style="justify-content: center;" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <button class="icon-btn" aria-label="Account"><i class="fas fa-user"></i></button>
+                    <button class="icon-btn" aria-label="Cart"><i class="fas fa-shopping-bag"></i><span class="bag-count">2</span></button>
+                </div>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul class="nav-list">
+                <li><a href="index_variant_p.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">Collections</a></li>
+                <li><a href="house_of_asili.html" class="nav-link" style="color: var(--c-extra-1);">The House of Asili</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <span class="drawer-brand">
+                 <img src="https://www.asiligems.com/voyager/wp-content/uploads/2025/12/Asili-Gems-Ltd-Black-b3c9e8.svg" alt="Asili Gems Logo" class="asili-logo-img" style="height: 40px; width: auto;">
+            </span>
+            <button onclick="toggleDrawer()" class="close-drawer-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-content">
+            <nav class="drawer-nav">
+                <a href="index_variant_p.html" class="drawer-link"><span>01</span> Home</a>
+                <a href="shop.html" class="drawer-link"><span>02</span> Shop</a>
+                <a href="#" class="drawer-link"><span>03</span> Collections</a>
+                <a href="house_of_asili.html" class="drawer-link"><span>04</span> The House of Asili</a>
+                <a href="contact.html" class="drawer-link"><span>05</span> Contact</a>
+            </nav>
+            <div class="drawer-search">
+                 <input type="text" placeholder="Search gems...">
+                 <button><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="drawer-footer">
+            <div class="drawer-utils">
+                <a href="#" class="drawer-util-link">My Account</a>
+                <a href="#" class="drawer-util-link">Wishlist</a>
+                <a href="#" class="drawer-util-link">Track Order</a>
+            </div>
+            <div class="drawer-socials">
+                <a href="#" class="drawer-social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#" class="drawer-social-icon"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <p style="font-family: var(--f-body); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; color: var(--c-secondary);">Est. 2025</p>
+            <h1 class="hero-title">The House of Asili</h1>
+            <p style="font-size: 1.2rem; line-height: 1.6; max-width: 600px; margin: 0 auto; opacity: 0.9;">
+                Refining Africa's natural wealth at home with mastery and pride. Merging engineering precision with gemological artistry.
+            </p>
+        </div>
+    </section>
+
+    <!-- OUR PHILOSOPHY -->
+    <section class="content-section">
+        <div class="asili-container">
+            <div class="text-block">
+                <span class="section-bridge" style="color: var(--c-primary);">Our Philosophy</span>
+                <h2>A New African Standard</h2>
+                <p>
+                    Asili Gems Ltd. was founded on a singular belief: that Africa's gemstones should be perfected where they are found. We merge engineering precision with gemological artistry to produce fine gemstones that reflect brilliance and integrity.
+                </p>
+                <p>
+                    Our artisans are trained through a blend of rigorous scientific study and hands-on craftsmanship rooted in African tradition and innovation. Every facet is the result of discipline, learning, and a deep respect for the Earth's design.
+                </p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Precision & Artistry</h3>
+                    <p>Merging engineering accuracy with the artistic intuition required to bring out the soul of every stone.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-globe-africa"></i></div>
+                    <h3>Pan-African Vision</h3>
+                    <p>While our craft was refined in Ratnapura, Sri Lanka, our vision remains distinctively Ugandan and Pan-African.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>Dignity & Pride</h3>
+                    <p>Creating a legacy where every gem we polish carries not only light but the dignity of its origin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE JOURNEY (Dark Section) -->
+    <section class="journey-section">
+        <div class="asili-container">
+            <div class="journey-grid">
+                <div class="journey-text">
+                    <span class="section-bridge" style="color: var(--c-secondary);">The Craft</span>
+                    <h3>Knowledge, Discipline, Pride</h3>
+                    <p>
+                        Our mission is to cut, polish, and perfect gemstones where they are found. While our craft was honed in the legendary gem markets of Ratnapura, Sri Lanka, our heart and operations are proudly Ugandan.
+                    </p>
+                    <p>
+                        We are creating a new African standard of beauty—one rooted in rigorous knowledge, unwavering discipline, and the deep pride of refining our own natural wealth.
+                    </p>
+                    <a href="shop.html" class="btn-outline" style="border-color: #fff; color: #fff;">View Collection</a>
+                </div>
+                <div class="journey-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1598563765668-52c676781255?q=80&w=1000" alt="Gem Cutting" class="journey-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter-section">
+        <div class="asili-container">
+            <h2 class="newsletter-title">Join the Asili Family</h2>
+            <p class="newsletter-desc">Be the first to know about new collections, exclusive events, and the stories behind our ethically sourced gemstones.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
+                <button type="submit" class="btn-subscribe">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER (Copied from index_variant_p.html) -->
+    <footer>
+        <div class="asili-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>THE BRAND</h4>
+                    <ul>
+                        <li><a href="house_of_asili.html">Our Story</a></li>
+                        <li><a href="#">Our Craft</a></li>
+                        <li><a href="#">The Source</a></li>
+                        <li><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>SHOP</h4>
+                    <ul>
+                        <li><a href="shop.html">The Asili Collection</a></li>
+                        <li><a href="shop.html">Gemstones</a></li>
+                        <li><a href="shop.html">High Jewellery</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>CUSTOMER CARE</h4>
+                    <ul>
+                        <li><a href="#">Shipping and Delivery</a></li>
+                        <li><a href="#">Returns and Exchanges</a></li>
+                        <li><a href="#">Care and Materials</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-row">
+                <div class="trust-row">
+                    <span>GIA Certified</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Ethically Sourced</span>
+                    <i class="fas fa-gem trust-divider"></i>
+                    <span>Global Shipping</span>
+                </div>
+
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="copyright">&copy; 2026 Asili Gems. All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Logic -->
+    <script src="assets/js/app.js" defer></script>
+    <script>
+        // Header Scroll Effect (Inline for this page to work standalone)
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        function toggleDrawer() {
+            document.getElementById('mobileDrawer').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
