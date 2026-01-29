@@ -1,4 +1,4 @@
-# Gemini: Asiligems Development Companion
+# Gemini-CLI: Asiligems Development Companion
 
 **Role:** Peer-Programmer | UI/UX Designer | Researcher  
 **Project:** Asiligems (Modern Gemstones Online Store)  
